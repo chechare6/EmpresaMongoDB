@@ -7,12 +7,14 @@ import org.bson.Document;
 
 import Controller.Controller;
 import IO.IO;
+import model.Empleado;
 
 public class MenuEmpleado {
 	
 	public static void menuEmpleado(Controller controller) {
-		while(true) {
-			List<String> opciones = List.of("EMPLEADOS:\n1. VER", "2. BUSCAR", "3. AÑADIR","4. ELIMINAR","5. MODIFICAR","6. AÑADIR PROYECTO A EMPLEADO","7. ELIMINAR PROYECTO DE EMPLEADO", "0. VOLVER");
+		while (true) {
+			List<String> opciones = List.of("EMPLEADOS:\n1. VER", "2. BUSCAR", "3. AÑADIR", "4. ELIMINAR",
+					"5. MODIFICAR", "6. AÑADIR PROYECTO A EMPLEADO", "7. ELIMINAR PROYECTO DE EMPLEADO", "0. VOLVER");
 			IO.println(opciones);
 			switch (IO.readString().charAt(0)) {
 			case '1':
@@ -22,11 +24,13 @@ public class MenuEmpleado {
 				searchEmpleado(controller);
 				break;
 			case '3':
-				String tryAdd = (addEmpleado(controller) ? "Se pudo añadir empleado" : "No se pudo añadir el nuevo empleado");
+				String tryAdd = (addEmpleado(controller) ? "Se pudo añadir empleado"
+						: "No se pudo añadir el nuevo empleado");
 				IO.println(tryAdd);
 				break;
 			case '4':
-				String tryDelete = (deleteEmpleado(controller) ? "Se eliminó correctamente el empleado" : "No se pudo eliminar el empleado");
+				String tryDelete = (deleteEmpleado(controller) ? "Se eliminó correctamente el empleado"
+						: "No se pudo eliminar el empleado");
 				IO.println(tryDelete);
 				break;
 			case '5':
@@ -44,7 +48,7 @@ public class MenuEmpleado {
 			}
 		}
 	}
-	
+
 	private static void verEmpleados(Controller controller) {
 		ArrayList<Document> empleados = controller.getEmpleados();
 		for (Document empleado : empleados) {
@@ -52,19 +56,27 @@ public class MenuEmpleado {
 		}
 	}
 
+	private static boolean addEmpleado(Controller controller) {
+		IO.print("Nombre del nuevo empleado: ");
+		String nombre = IO.readString();
+		IO.print("Puesto que ocupa el empleado: ");
+		String puesto = IO.readString();
+		return controller.addEmpleado(new Empleado(nombre, puesto));
+	}
+
 	private static void deleteProyect(Controller controller) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	private static void addProyect(Controller controller) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	private static void updateEmpleado(Controller controller) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	private static boolean deleteEmpleado(Controller controller) {
@@ -72,16 +84,9 @@ public class MenuEmpleado {
 		return false;
 	}
 
-	private static boolean addEmpleado(Controller controller) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 	private static void searchEmpleado(Controller controller) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	
-	
 }

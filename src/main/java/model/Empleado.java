@@ -13,6 +13,11 @@ public class Empleado {
 	private String nombre;
 	private String puesto;
 	
+	public Empleado(String nombre, String puesto) {
+		this.nombre = nombre;
+		this.puesto = puesto;
+	}
+	
 	public String toJson() {
 		return new Gson().toJson(this);
 	}
@@ -20,4 +25,5 @@ public class Empleado {
 	public static Empleado fromJson(String json) {
 		return new Gson().fromJson(json, Empleado.class);
 	}
+
 }

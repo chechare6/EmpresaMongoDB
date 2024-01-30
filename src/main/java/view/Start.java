@@ -18,18 +18,18 @@ public class Start {
 				);
 		List<String> opciones;
 		while(true) {
-			opciones = List.of("BBDD Empresa ~ MongoDB:\n1. DEPARTAMENTOS", "2. EMPLEADOS", "3. PROYECTOS","4. MIEMBROS - PROYECTOS", "0. CERRAR");
+			opciones = List.of("BBDD Empresa ~ MongoDB:\n1. EMPLEADOS", "2. PROYECTOS", "3. TAREAS", "4. MIEMBROS - PROYECTOS", "0. CERRAR");
 			IO.println(opciones);
 			int seleccionado = IO.readString().charAt(0);
 			switch (seleccionado) {
 			case '1':
-				MenuTarea.menuTarea(controller);
-				break;
-			case '2':
 				MenuEmpleado.menuEmpleado(controller);
 				break;
-			case '3':
+			case '2':
 				MenuProyecto.menuProyecto(controller);
+				break;
+			case '3':
+				MenuTarea.menuTarea(controller);
 				break;
 			case '4':
 				MenuMiembrosProyectos.menuMiembrosProyectos(controller);
