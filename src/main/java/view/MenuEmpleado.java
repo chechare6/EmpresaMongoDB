@@ -2,6 +2,9 @@ package view;
 
 import java.util.List;
 
+import org.bson.Document;
+import org.bson.types.ObjectId;
+
 import Controller.Controller;
 import IO.IO;
 import model.Empleado;
@@ -18,7 +21,7 @@ public class MenuEmpleado {
 				verEmpleados(controller);
 				break;
 			case '2':
-				searchEmpleado(controller);
+				IO.print(searchEmpleado(controller));
 				break;
 			case '3':
 				String tryAdd = (addEmpleado(controller) ? "Se pudo añadir empleado"
@@ -49,6 +52,12 @@ public class MenuEmpleado {
 	private static void verEmpleados(Controller controller) {
 		controller.getEmpleados();
 	}
+	
+	private static Document searchEmpleado(Controller controller) {
+		IO.print("Introduce la ID del empleado: ");
+		ObjectId id = new ObjectId(IO.readString());
+		return controller.searchEmpleado(id);
+	}
 
 	private static boolean addEmpleado(Controller controller) {
 		IO.print("Nombre del nuevo empleado: ");
@@ -63,6 +72,13 @@ public class MenuEmpleado {
 		String nombre = IO.readString();
 		return controller.deleteEmpleado(nombre);
 	}
+	
+	private static void updateEmpleado(Controller controller) {
+		IO.print("Introduce el ID del empleado a modificar: ");
+		ObjectId id = new ObjectId(IO.readString());
+		IO.print(id);
+
+	}
 
 	private static boolean deleteProyect(Controller controller) {
 		// TODO Auto-generated method stub
@@ -73,15 +89,4 @@ public class MenuEmpleado {
 		// TODO Auto-generated method stub
 
 	}
-
-	private static void updateEmpleado(Controller controller) {
-		// TODO Auto-generated method stub
-
-	}
-
-	private static void searchEmpleado(Controller controller) {
-		// TODO Auto-generated method stub
-
-	}
-
 }

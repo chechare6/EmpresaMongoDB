@@ -12,6 +12,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.InsertOneResult;
 
+import IO.IO;
 import conexionDB.MongoDB;
 import model.Empleado;
 
@@ -28,19 +29,18 @@ public class EmpleadosRepositoryImpl implements EmpleadosRepository {
 	}
 
 	@Override
-	public void getById() {
-		// TODO Auto-generated method stub
-		
-	}	
+	public Document getById(ObjectId id) {
+		MongoCollection<Document> doc = MongoDB.database.getCollection("Empleados");
+		Document empleado = doc.find(eq("_id", id)).first();
+		return empleado;
+	}
 
 	@Override
 	public Boolean save(Empleado e) {
 		try {
 			MongoCollection<Document> collection = MongoDB.database.getCollection("Empleados");
-			InsertOneResult result = collection.insertOne(new Document()
-					.append("_id", new ObjectId())
-					.append("nombre", e.getNombre())
-					.append("puesto", e.getPuesto()));
+			InsertOneResult result = collection.insertOne(new Document().append("_id", new ObjectId())
+					.append("nombre", e.getNombre()).append("puesto", e.getPuesto()));
 			System.out.println("Se le ha asignado la id: " + result.getInsertedId());
 			return true;
 		} catch (Exception ex) {
@@ -62,9 +62,19 @@ public class EmpleadosRepositoryImpl implements EmpleadosRepository {
 	}
 
 	@Override
-	public Boolean update(String nombre) {
-		// TODO Auto-generated method stub
-		return null;
+	public Boolean update(ObjectId id) {
+		Document empleado = getById(id);
+		if (empleado != null) {
+			try {
+				IO.print("Intoduce el nuevo nombre del empleado: ");
+				String nombre = IO.readString();
+				IO.print("Introduce el nuevo puesto del empleado: ");
+				String puesto = IO.readString();
+			} catch (Exception e) {
+				return false;
+			}
+		}
+		return false;
 	}
 
 }

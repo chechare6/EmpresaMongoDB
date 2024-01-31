@@ -1,10 +1,12 @@
 package repositories;
 
+import org.bson.Document;
+import org.bson.types.ObjectId;
 
 public interface CrudRepository<T> {
 	void getAll();
-	void getById();
+	Document getById(ObjectId id);
 	Boolean save (T entity);
 	Boolean delete(String nombre);
-	Boolean update(String nombre);
+	Boolean update(ObjectId	id);
 }

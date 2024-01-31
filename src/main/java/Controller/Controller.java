@@ -2,6 +2,9 @@ package Controller;
 
 import java.util.logging.Logger;
 
+import org.bson.Document;
+import org.bson.types.ObjectId;
+
 import model.Empleado;
 import repositories.empleados.EmpleadosRepository;
 import repositories.proyecto.ProyectoRepository;
@@ -30,6 +33,16 @@ public class Controller {
 		logger.info("Obteniendo empleados...");
 		empleadosRepository.getAll();
 	}
+	
+	/**
+	 * Método para buscar empleados según su ID
+	 * @param id [La id que busca]
+	 * @return 
+	 */
+	public Document searchEmpleado(ObjectId id) {
+		logger.info("Buscando empleado...");
+		return empleadosRepository.getById(id);
+	}
 
 	/**
 	 * Método para añadir un empleado a la BBDD
@@ -50,6 +63,11 @@ public class Controller {
 		/* TODO: AQUI TENEMOS QUE MIRAR SI HAY MÁS DE UN EMPLEADO CON ESE NOMBRE Y HACER ELEGIR, ¿O BORRAR SEGÚN ID? */
 		logger.info("Borrando empleado...");
 		return empleadosRepository.delete(nombre);
+	}
+	
+	public Boolean updateEmpleado(ObjectId id) {
+		logger.info("Modificando empleado...");
+		return empleadosRepository.update(id);
 	}
 
 	// DEPARTAMENTOS

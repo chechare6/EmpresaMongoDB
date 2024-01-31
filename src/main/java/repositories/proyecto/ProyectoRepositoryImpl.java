@@ -3,6 +3,7 @@ package repositories.proyecto;
 import java.util.ArrayList;
 
 import org.bson.Document;
+import org.bson.types.ObjectId;
 
 import com.mongodb.client.MongoCollection;
 
@@ -18,9 +19,9 @@ public class ProyectoRepositoryImpl implements ProyectoRepository {
 	}
 	
 	@Override
-	public void getById() {
+	public Document getById(ObjectId id) {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
 	@Override
@@ -36,7 +37,7 @@ public class ProyectoRepositoryImpl implements ProyectoRepository {
 	}
 
 	@Override
-	public Boolean update(String nombre) {
+	public Boolean update(ObjectId id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
