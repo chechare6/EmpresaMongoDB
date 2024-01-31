@@ -15,6 +15,9 @@ public class TareasRepositoryImpl implements TareasRepository{
 		MongoCollection<Document> doc = MongoDB.database.getCollection("Tareas");
 		ArrayList<Document> tareas = new ArrayList<>();
 		doc.find().into(tareas);
+		for (Document tarea : tareas){
+			System.out.println(tarea);
+		}
 	}
 	
 	@Override
