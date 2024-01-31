@@ -2,8 +2,11 @@ package view;
 
 import Controller.Controller;
 import IO.IO;
+import model.Tarea;
 
 import java.util.List;
+import java.sql.Date;
+
 
 public class MenuTarea {
 	public static void menuTarea(Controller controller) {
@@ -52,8 +55,32 @@ public class MenuTarea {
 	}
 
 	private static boolean addTarea(Controller controller){
-		//TODO
-		return false;
+		IO.print("Introduce el nombre de la tarea: ");
+		String nombre = IO.readString();
+		IO.print("Descripcion de la tarea: ");
+		String descripcion = IO.readString();
+		IO.print("Fecha de vencimiento de la tarea: (yyyy-MM-dd): ");
+		Date fechaFin = Date.valueOf(IO.readLocalDate());
+		IO.print("Sabes el ID del proyecto? (s/n)");
+		String proyectoID="";
+		switch (IO.readString().charAt(0)){
+			case 's':
+				IO.print("Introduzca el ID del proyecto");
+				proyectoID = IO.readString();
+				break;
+			case 'n':
+				//TODO: Hay que llamar al metodo getAllProyectos
+				controller.getProyectos();
+				System.out.println("-----------");
+				IO.print("Introduzca el ID del proyecto");
+				proyectoID = IO.readString();
+				break;
+			default:
+				System.out.println("RESPUESTA NO VÁLIDA");
+				break;
+
+		}
+		return controller.addTarea(new Tarea(nombre, descripcion, fechaFin, proyectoID));
 	}
 
 	private static void updateTarea(Controller controller){

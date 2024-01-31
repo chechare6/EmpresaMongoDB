@@ -42,7 +42,7 @@ public class TareasRepositoryImpl implements TareasRepository {
 			InsertOneResult result = collection.insertOne(new Document()
 					.append("_id", new ObjectId())
 					.append("nombre", t.getNombre())
-					.append("puesto", t.getDescripcion())
+					.append("descripcion", t.getDescripcion())
 					.append("estado", t.getEstado())
 					.append("fecha_vencimiento", t.getFecha_vencimiento())
 					.append("id_proyect", t.getId_proyecto()));

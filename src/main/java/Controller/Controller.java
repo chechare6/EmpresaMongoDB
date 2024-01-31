@@ -2,6 +2,7 @@ package Controller;
 
 import java.util.logging.Logger;
 
+import model.Tarea;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
@@ -96,5 +97,9 @@ public class Controller {
 	public void getTareas() {
 		logger.info("Obteniendo tareas...");
 		tareasRepository.getAll();
+	}
+	public boolean addTarea(Tarea t){
+		logger.info("Añadiendo tarea...");
+		return tareasRepository.save(t);
 	}
 }

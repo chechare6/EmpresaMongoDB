@@ -16,9 +16,18 @@ public class Tarea {
 	private String descripcion;
 	private String estado;
 	private Date fecha_vencimiento;
-	private ObjectId id_proyecto;
-	
-	public String toJson() {
+	private String id_proyecto; //ObjectID?????
+
+    public Tarea(String nombre, String descripcion, Date fechaFin, String proyectoID) {
+		super();
+		this.nombre = nombre;
+		this.descripcion = descripcion;
+		this.estado = "Progreso";
+		this.fecha_vencimiento = fechaFin;
+		this.id_proyecto = proyectoID;
+    }
+
+    public String toJson() {
 		return new Gson().toJson(this);
 	}
 	
