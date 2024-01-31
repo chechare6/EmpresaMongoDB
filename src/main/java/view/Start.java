@@ -14,6 +14,7 @@ public class Start {
 		Controller controller = new Controller(
 				new EmpleadosRepositoryImpl(),
 				new ProyectoRepositoryImpl(),
+				new TareasRepositoryImpl(),
 				new TareasRepositoryImpl()
 				);
 		List<String> opciones;

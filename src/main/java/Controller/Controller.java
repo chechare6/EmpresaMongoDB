@@ -16,13 +16,15 @@ public class Controller {
 	private final EmpleadosRepository empleadosRepository;
 	private final ProyectoRepository proyectoRepository;
 	private final TareasRepository departamentosRepository;
+	private final TareasRepository tareasRepository;
 
 	public Controller(EmpleadosRepository empleadosRepository, ProyectoRepository proyectoRepository,
-			TareasRepository departamentosRepository) {
+                      TareasRepository departamentosRepository, TareasRepository tareasRepository) {
 		this.empleadosRepository = empleadosRepository;
 		this.departamentosRepository = departamentosRepository;
 		this.proyectoRepository = proyectoRepository;
-	}
+        this.tareasRepository = tareasRepository;
+    }
 
 	// EMPLEADOS
 	/**
@@ -80,5 +82,11 @@ public class Controller {
 	public void getProyectos() {
 		logger.info("Obteniendo proyectos...");
 		proyectoRepository.getAll();
+	}
+
+	//TAREAS
+	public void getTareas() {
+		logger.info("Obteniendo tareas...");
+		tareasRepository.getAll();
 	}
 }
