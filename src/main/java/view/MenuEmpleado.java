@@ -64,9 +64,15 @@ public class MenuEmpleado {
 		return controller.addEmpleado(new Empleado(nombre, puesto));
 	}
 
-	private static void deleteProyect(Controller controller) {
-		// TODO Auto-generated method stub
+	private static boolean deleteEmpleado(Controller controller) {
+		IO.print("Introduce el nombre del empleado a borrar: ");
+		String nombre = IO.readString();
+		return controller.deleteEmpleado(nombre);
+	}
 
+	private static boolean deleteProyect(Controller controller) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	private static void addProyect(Controller controller) {
@@ -77,11 +83,6 @@ public class MenuEmpleado {
 	private static void updateEmpleado(Controller controller) {
 		// TODO Auto-generated method stub
 
-	}
-
-	private static boolean deleteEmpleado(Controller controller) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 	private static void searchEmpleado(Controller controller) {
