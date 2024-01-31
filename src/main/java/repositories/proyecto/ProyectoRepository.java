@@ -1,8 +1,8 @@
 package repositories.proyecto;
 
-import org.bson.Document;
-
+import model.Proyecto;
 import repositories.CrudRepository;
 
-public interface ProyectoRepository extends CrudRepository<Document>{
+public interface ProyectoRepository extends CrudRepository<Proyecto>{
+
 }

@@ -41,7 +41,7 @@ public class EmpleadosRepositoryImpl implements EmpleadosRepository {
 			MongoCollection<Document> collection = MongoDB.database.getCollection("Empleados");
 			InsertOneResult result = collection.insertOne(new Document().append("_id", new ObjectId())
 					.append("nombre", e.getNombre()).append("puesto", e.getPuesto()));
-			System.out.println("Se le ha asignado la id: " + result.getInsertedId());
+			IO.println("Se le ha asignado la id: " + result.getInsertedId());
 			return true;
 		} catch (Exception ex) {
 			return false;
@@ -54,7 +54,7 @@ public class EmpleadosRepositoryImpl implements EmpleadosRepository {
 			MongoCollection<Document> collection = MongoDB.database.getCollection("Empleados");
 			Bson query = eq("nombre", nombre);
 			DeleteResult result = collection.deleteOne(query);
-			System.out.println("Se ha borrado " + result.getDeletedCount() + " entradas.");
+			System.out.println("Se ha borrado " + result.getDeletedCount() + " entrada/s.");
 			return true;
 		} catch (Exception e) {
 			return false;
@@ -76,5 +76,4 @@ public class EmpleadosRepositoryImpl implements EmpleadosRepository {
 		}
 		return false;
 	}
-
 }

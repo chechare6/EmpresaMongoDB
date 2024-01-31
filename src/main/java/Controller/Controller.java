@@ -6,6 +6,7 @@ import org.bson.Document;
 import org.bson.types.ObjectId;
 
 import model.Empleado;
+import model.Proyecto;
 import repositories.empleados.EmpleadosRepository;
 import repositories.proyecto.ProyectoRepository;
 import repositories.tareas.TareasRepository;
@@ -15,13 +16,10 @@ public class Controller {
 	// DEPENDENCIAS
 	private final EmpleadosRepository empleadosRepository;
 	private final ProyectoRepository proyectoRepository;
-	private final TareasRepository departamentosRepository;
 	private final TareasRepository tareasRepository;
 
-	public Controller(EmpleadosRepository empleadosRepository, ProyectoRepository proyectoRepository,
-                      TareasRepository departamentosRepository, TareasRepository tareasRepository) {
+	public Controller(EmpleadosRepository empleadosRepository, ProyectoRepository proyectoRepository, TareasRepository tareasRepository) {
 		this.empleadosRepository = empleadosRepository;
-		this.departamentosRepository = departamentosRepository;
 		this.proyectoRepository = proyectoRepository;
         this.tareasRepository = tareasRepository;
     }
@@ -72,16 +70,26 @@ public class Controller {
 		return empleadosRepository.update(id);
 	}
 
-	// DEPARTAMENTOS
-	public void getDepartamentos() {
-		logger.info("Obteniendo empleados...");
-		departamentosRepository.getAll();
-	}
-
 	// PROYECTOS
 	public void getProyectos() {
 		logger.info("Obteniendo proyectos...");
 		proyectoRepository.getAll();
+	}
+	
+	public void searchProyecto(ObjectId id) {
+		logger.info("Buscando proyecto...");
+		proyectoRepository.getById(id);
+	}
+	
+	public Boolean addProyecto(Proyecto p) {
+		logger.info("Añadiendo proyecto...");
+		return proyectoRepository.save(p);
+	}
+
+	public Boolean deleteProyecto(String nombre) {
+		logger.info("Borrando proyecto...");
+		return proyectoRepository.delete(nombre);
+		
 	}
 
 	//TAREAS
