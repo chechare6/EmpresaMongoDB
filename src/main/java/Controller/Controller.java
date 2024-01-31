@@ -102,4 +102,16 @@ public class Controller {
 		logger.info("Añadiendo tarea...");
 		return tareasRepository.save(t);
 	}
+
+	public boolean deleteTarea(String nombre){
+		return tareasRepository.delete(nombre);
+	}
+	public Boolean updateTarea(ObjectId id) {
+		logger.info("Modificando empleado...");
+		return tareasRepository.update(id);
+	}
+	public Document searchTarea(ObjectId id) {
+		logger.info("Buscando empleado...");
+		return tareasRepository.getById(id);
+	}
 }
