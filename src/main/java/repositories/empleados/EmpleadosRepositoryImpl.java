@@ -24,7 +24,7 @@ public class EmpleadosRepositoryImpl implements EmpleadosRepository {
 		ArrayList<Document> empleados = new ArrayList<>();
 		doc.find().into(empleados);
 		for (Document empleado : empleados) {
-			System.out.println(empleado);
+			IO.println(empleado);
 		}
 	}
 
@@ -54,7 +54,7 @@ public class EmpleadosRepositoryImpl implements EmpleadosRepository {
 			MongoCollection<Document> collection = MongoDB.database.getCollection("Empleados");
 			Bson query = eq("nombre", nombre);
 			DeleteResult result = collection.deleteOne(query);
-			System.out.println("Se ha borrado " + result.getDeletedCount() + " entrada/s.");
+			IO.println("Se ha borrado " + result.getDeletedCount() + " entrada/s.");
 			return true;
 		} catch (Exception e) {
 			return false;

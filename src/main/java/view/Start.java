@@ -18,7 +18,7 @@ public class Start {
 				);
 		List<String> opciones;
 		while(true) {
-			opciones = List.of("BBDD Empresa ~ MongoDB:\n1. EMPLEADOS", "2. PROYECTOS", "3. TAREAS", "4. MIEMBROS - PROYECTOS", "0. CERRAR");
+			opciones = List.of("BBDD Empresa ~ MongoDB:\n1. EMPLEADOS", "2. PROYECTOS", "3. TAREAS", "0. CERRAR");
 			IO.println(opciones);
 			int seleccionado = IO.readString().charAt(0);
 			switch (seleccionado) {
@@ -30,9 +30,6 @@ public class Start {
 				break;
 			case '3':
 				MenuTarea.menuTarea(controller);
-				break;
-			case '4':
-				MenuMiembrosProyectos.menuMiembrosProyectos(controller);
 				break;
 			case '0':
 				IO.println("CERRANDO BBDD");
