@@ -1,7 +1,10 @@
 package repositories;
 
-import java.util.ArrayList;
 
 public interface CrudRepository<T> {
-	ArrayList<T> getAll();
+	void getAll();
+	Boolean getById(String id);
+	Boolean save (T entity);
+	Boolean delete(String nombre);
+	Boolean update(String nombre);
 }
