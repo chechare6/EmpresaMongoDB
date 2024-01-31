@@ -1,9 +1,6 @@
 package view;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import org.bson.Document;
 
 import Controller.Controller;
 import IO.IO;
@@ -50,10 +47,7 @@ public class MenuEmpleado {
 	}
 
 	private static void verEmpleados(Controller controller) {
-		ArrayList<Document> empleados = controller.getEmpleados();
-		for (Document empleado : empleados) {
-			System.out.println(empleado);
-		}
+		controller.getEmpleados();
 	}
 
 	private static boolean addEmpleado(Controller controller) {

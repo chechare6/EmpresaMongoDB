@@ -11,11 +11,28 @@ import conexionDB.MongoDB;
 public class TareasRepositoryImpl implements TareasRepository{
 
 	@Override
-	public ArrayList<Document> getAll() {
+	public void getAll() {
 		MongoCollection<Document> doc = MongoDB.database.getCollection("Tareas");
 		ArrayList<Document> tareas = new ArrayList<>();
 		doc.find().into(tareas);
-		return tareas;
+	}
+
+	@Override
+	public Boolean save(Document entity) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Boolean delete(String nombre) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Boolean update(String nombre) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

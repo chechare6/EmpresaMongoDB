@@ -1,18 +1,7 @@
 package Controller;
 
-import java.util.ArrayList;
 import java.util.logging.Logger;
 
-import static com.mongodb.client.model.Filters.*;
-import org.bson.Document;
-import org.bson.conversions.Bson;
-import org.bson.types.ObjectId;
-
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.result.DeleteResult;
-import com.mongodb.client.result.InsertOneResult;
-
-import conexionDB.MongoDB;
 import model.Empleado;
 import repositories.empleados.EmpleadosRepository;
 import repositories.proyecto.ProyectoRepository;
@@ -37,9 +26,9 @@ public class Controller {
 	 * Método que busca en la BBDD todos los empleados y los imprime
 	 * @return Un String de todos los empleados
 	 */
-	public ArrayList<Document> getEmpleados() {
+	public void getEmpleados() {
 		logger.info("Obteniendo empleados...");
-		return empleadosRepository.getAll();
+		empleadosRepository.getAll();
 	}
 
 	/**
@@ -49,17 +38,7 @@ public class Controller {
 	 */
 	public Boolean addEmpleado(Empleado e) {
 		logger.info("Añadiendo empleado...");
-		try {
-			MongoCollection<Document> collection = MongoDB.database.getCollection("Empleados");
-			InsertOneResult result = collection.insertOne(new Document()
-					.append("_id", new ObjectId())
-					.append("nombre", e.getNombre())
-					.append("puesto", e.getPuesto()));
-			System.out.println("Se le ha asignado la id: " + result.getInsertedId());
-			return true;
-		} catch (Exception ex) {
-			return false;
-		}
+		return empleadosRepository.save(e);
 	}
 
 	/**
@@ -70,26 +49,18 @@ public class Controller {
 	public Boolean deleteEmpleado(String nombre) {
 		/* TODO: AQUI TENEMOS QUE MIRAR SI HAY MÁS DE UN EMPLEADO CON ESE NOMBRE Y HACER ELEGIR, ¿O BORRAR SEGÚN ID? */
 		logger.info("Borrando empleado...");
-		try {
-			MongoCollection<Document> collection = MongoDB.database.getCollection("Empleados");
-			Bson query = eq("nombre", nombre);
-			DeleteResult result = collection.deleteOne(query);
-			System.out.println("Se ha borrado " + result.getDeletedCount() + " entradas.");
-			return true;
-		} catch (Exception e) {
-			return false;
-		}
+		return empleadosRepository.delete(nombre);
 	}
 
 	// DEPARTAMENTOS
-	public ArrayList<Document> getDepartamentos() {
+	public void getDepartamentos() {
 		logger.info("Obteniendo empleados...");
-		return departamentosRepository.getAll();
+		departamentosRepository.getAll();
 	}
 
 	// PROYECTOS
-	public ArrayList<Document> getProyectos() {
+	public void getProyectos() {
 		logger.info("Obteniendo proyectos...");
-		return proyectoRepository.getAll();
+		proyectoRepository.getAll();
 	}
 }

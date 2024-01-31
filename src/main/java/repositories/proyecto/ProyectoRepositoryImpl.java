@@ -13,11 +13,28 @@ import model.Proyecto;
 public class ProyectoRepositoryImpl implements ProyectoRepository {
 
 	@Override
-	public ArrayList<Document> getAll() {
+	public void getAll() {
 		MongoCollection<Document> doc = MongoDB.database.getCollection("Proyectos");
 		ArrayList<Document> proyectos = new ArrayList<>();
 		doc.find().into(proyectos);
-		return proyectos;
+	}
+
+	@Override
+	public Boolean save(Document entity) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Boolean delete(String nombre) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Boolean update(String nombre) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
