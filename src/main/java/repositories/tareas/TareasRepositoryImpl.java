@@ -16,6 +16,12 @@ public class TareasRepositoryImpl implements TareasRepository{
 		ArrayList<Document> tareas = new ArrayList<>();
 		doc.find().into(tareas);
 	}
+	
+	@Override
+	public void getById() {
+		// TODO Auto-generated method stub
+		
+	}
 
 	@Override
 	public Boolean save(Document entity) {
@@ -34,5 +40,4 @@ public class TareasRepositoryImpl implements TareasRepository{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 }

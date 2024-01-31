@@ -28,6 +28,12 @@ public class EmpleadosRepositoryImpl implements EmpleadosRepository {
 	}
 
 	@Override
+	public void getById() {
+		// TODO Auto-generated method stub
+		
+	}	
+
+	@Override
 	public Boolean save(Empleado e) {
 		try {
 			MongoCollection<Document> collection = MongoDB.database.getCollection("Empleados");
@@ -59,5 +65,6 @@ public class EmpleadosRepositoryImpl implements EmpleadosRepository {
 	public Boolean update(String nombre) {
 		// TODO Auto-generated method stub
 		return null;
-	}	
+	}
+
 }
