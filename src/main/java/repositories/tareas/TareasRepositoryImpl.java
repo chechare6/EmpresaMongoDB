@@ -2,8 +2,11 @@ package repositories.tareas;
 
 import static com.mongodb.client.model.Filters.eq;
 
+import java.sql.Date;
 import java.util.ArrayList;
 
+import com.mongodb.client.model.Updates;
+import com.mongodb.client.result.UpdateResult;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
@@ -42,7 +45,7 @@ public class TareasRepositoryImpl implements TareasRepository {
 			InsertOneResult result = collection.insertOne(new Document()
 					.append("_id", new ObjectId())
 					.append("nombre", t.getNombre())
-					.append("puesto", t.getDescripcion())
+					.append("descripcion", t.getDescripcion())
 					.append("estado", t.getEstado())
 					.append("fecha_vencimiento", t.getFecha_vencimiento())
 					.append("id_proyect", t.getId_proyecto()));
@@ -68,7 +71,38 @@ public class TareasRepositoryImpl implements TareasRepository {
 
 	@Override
 	public Boolean update(ObjectId id) {
-		// TODO Auto-generated method stub
-		return null;
+		Document tarea = getById(id);
+		if ( tarea != null){
+			try{
+				IO.print("Introduce el nuevo nombre da la tarea: ");
+				String nombre = IO.readString();
+				IO.print("Introduce la nueva descripcion de la tarea: ");
+				String descripcion = IO.readString();
+				IO.print("Introduce la nueva Fecha de vencimiento de la tarea: (yyyy-MM-dd): ");
+				Date fechaFin = Date.valueOf(IO.readLocalDate());
+
+				Bson updates = Updates.combine(
+						Updates.set("nombre", nombre),
+						Updates.set("descripcion", descripcion),
+						Updates.set("fecha_vencimiento", fechaFin)
+				);
+
+				MongoCollection<Document> doc = MongoDB.database.getCollection("Tareas");
+				UpdateResult result = doc.updateOne(eq("_id", id), updates);
+				if (result.getModifiedCount() > 0) {
+					IO.print("Tarea actualizada exitosamente.");
+					return true;
+				} else {
+					IO.print("No se pudo actualizar la tarea.");
+					return false;
+				}
+			}catch (Exception e){
+				IO.print("Error al ingresar los nuevos valores.");
+				return false;
+			}
+		}else {
+			IO.print("La tarea con el ID proporcionado no existe.");
+			return false;
+		}
 	}
 }
