@@ -64,4 +64,10 @@ public class ProyectoRepositoryImpl implements ProyectoRepository {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public void addEmpleado() {
+		// TODO: MÉTODO QUE AÑADIRÁ UN EMPLEADO A UN PROYECTO
+		
+	}
 }

@@ -17,20 +17,27 @@ public class Empleado {
 	private Date fechaEntrada;
 	
 	// CONSTRUCTORES
-	public Empleado(String nombre, String puesto) {
-		this.nombre = nombre;
-		this.puesto = puesto;
-	}
+//	public Empleado(String nombre, String puesto) {
+//		this.nombre = nombre;
+//		this.puesto = puesto;
+//	}
+//	
+//	public Empleado(String nombre, String puesto, double salario) {
+//		this.nombre = nombre;
+//		this.puesto = puesto;
+//		this.salario = salario;
+//	}
+//	
+//	public Empleado(String nombre, String puesto, Date fechaEntrada) {
+//		this.nombre = nombre;
+//		this.puesto = puesto;
+//		this.fechaEntrada = fechaEntrada;
+//	}
 	
-	public Empleado(String nombre, String puesto, double salario) {
+	public Empleado(String nombre, String puesto, double salario, Date fechaEntrada) {
 		this.nombre = nombre;
 		this.puesto = puesto;
 		this.salario = salario;
-	}
-	
-	public Empleado(String nombre, String puesto, Date fechaEntrada) {
-		this.nombre = nombre;
-		this.puesto = puesto;
 		this.fechaEntrada = fechaEntrada;
 	}
 	

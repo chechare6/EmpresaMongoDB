@@ -1,5 +1,6 @@
 package view;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.bson.Document;
@@ -21,7 +22,7 @@ public class MenuEmpleado {
 				verEmpleados(controller);
 				break;
 			case '2':
-				IO.print(searchEmpleado(controller));
+				IO.println(searchEmpleado(controller));
 				break;
 			case '3':
 				String tryAdd = (addEmpleado(controller) ? "Se pudo añadir empleado"
@@ -34,7 +35,9 @@ public class MenuEmpleado {
 				IO.println(tryDelete);
 				break;
 			case '5':
-				updateEmpleado(controller);
+				String tryUpdate = (updateEmpleado(controller) ? "Se actualizó correctamente el empleado" 
+						: "No se pudo actualizar el empleado");
+				IO.println(tryUpdate);
 				break;
 			case '6':
 				addProyect(controller);
@@ -64,7 +67,16 @@ public class MenuEmpleado {
 		String nombre = IO.readString();
 		IO.print("Puesto que ocupa el empleado: ");
 		String puesto = IO.readString();
-		return controller.addEmpleado(new Empleado(nombre, puesto));
+		IO.print("¿Tiene salario?: ");
+		double salario = (Double) null;
+		Date fechaEntrada = null;
+		String sal = IO.readString();
+		if(sal.equals("Y")) {
+			IO.print("Introduce salario: ");
+			salario = IO.readDouble();
+		}			
+			
+		return controller.addEmpleado(new Empleado(nombre, puesto, salario, fechaEntrada));
 	}
 
 	private static boolean deleteEmpleado(Controller controller) {
@@ -73,11 +85,10 @@ public class MenuEmpleado {
 		return controller.deleteEmpleado(nombre);
 	}
 	
-	private static void updateEmpleado(Controller controller) {
+	private static Boolean updateEmpleado(Controller controller) {
 		IO.print("Introduce el ID del empleado a modificar: ");
 		ObjectId id = new ObjectId(IO.readString());
-		IO.print(id);
-
+		return controller.updateEmpleado(id);
 	}
 
 	private static boolean deleteProyect(Controller controller) {

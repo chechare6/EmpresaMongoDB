@@ -9,7 +9,7 @@ public class MenuTarea {
 	public static void menuTarea(Controller controller) {
 		while (true){
 			List<String> opciones = List.of(
-					"EMPLEADOS:\n1. VER TAREAS",
+					"TAREAS:\n1. VER TAREAS",
 					"2. BUSCAR TAREA POR ESTADO",
 					"3. AÑADIR TAREA",
 					"4. CAMBIAR ESTADO",
