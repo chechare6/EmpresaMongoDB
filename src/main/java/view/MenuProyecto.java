@@ -117,10 +117,7 @@ public class MenuProyecto {
 	}
 
 	private static Boolean deleteEmpleado(Controller controller) {
-		IO.print("Introduce el ID del proyecto al que lo quieres agregar: ");
-		ObjectId idProyecto = new ObjectId(IO.readString());
-		IO.print("Introduce el ID del empleado que quieres agregar: ");
-		ObjectId idEmpleado = new ObjectId(IO.readString());
-		return controller.addEmpleadoToProyecto(idEmpleado, idProyecto);
+		/* TODO: BORRAR ID (IdEmpleados) EN PROYECTOS */
+		return null;
 	}
 }

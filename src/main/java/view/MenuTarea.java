@@ -3,7 +3,6 @@ package view;
 import Controller.Controller;
 import IO.IO;
 import model.Tarea;
-import org.bson.Document;
 import org.bson.types.ObjectId;
 
 import java.util.List;
@@ -59,7 +58,7 @@ public class MenuTarea {
 	private static void searchTareaByState(Controller controller){
 		IO.print("Introduce el estado de la tarea: ");
 		String state = IO.readString();
-		IO.println(controller.searchTareaByState(state));
+		controller.searchTareaByState(state);
 		//TODO: Tocar el CRUD repository para encontrarlo por estado
 	}
 
