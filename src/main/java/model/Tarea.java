@@ -2,7 +2,6 @@ package model;
 
 import java.sql.Date;
 import org.bson.types.ObjectId;
-import com.google.gson.Gson;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Tarea {
-	private String _id;
+	private ObjectId _id;
 	private String nombre;
 	private String descripcion;
 	private String estado;
@@ -26,12 +25,4 @@ public class Tarea {
 		this.fecha_vencimiento = fechaFin;
 		this.id_proyecto = proyectoID;
     }
-
-    public String toJson() {
-		return new Gson().toJson(this);
-	}
-	
-	public static Tarea fromJson(String json) {
-		return new Gson().fromJson(json, Tarea.class);
-	}
 }

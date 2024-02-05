@@ -78,7 +78,6 @@ public class MenuTarea {
 				proyectoID = IO.readString();
 				break;
 			case 'n':
-				//TODO: Hay que llamar al metodo getAllProyectos
 				controller.getProyectos();
 				System.out.println("-----------");
 				IO.print("Introduzca el ID del proyecto");

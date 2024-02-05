@@ -48,7 +48,7 @@ public class TareasRepositoryImpl implements TareasRepository {
 					.append("descripcion", t.getDescripcion())
 					.append("estado", t.getEstado())
 					.append("fecha_vencimiento", t.getFecha_vencimiento())
-					.append("id_proyect", t.getId_proyecto()));
+					.append("id_proyecto", t.getId_proyecto()));
 			IO.println("Se le ha asignado la id: " + result.getInsertedId());
 			return true;
 		} catch (Exception ex) {

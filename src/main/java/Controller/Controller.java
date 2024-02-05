@@ -6,7 +6,6 @@ import model.Tarea;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
-import IO.IO;
 import model.Empleado;
 import model.Proyecto;
 import repositories.empleados.EmpleadosRepository;
@@ -97,6 +96,16 @@ public class Controller {
 	public Boolean updateProyecto(ObjectId id) {
 		logger.info("Modificando proyecto...");
 		return proyectoRepository.update(id);
+	}
+	
+	public Boolean addEmpleadoToProyecto(ObjectId idEmpleado, ObjectId idProyecto) {
+		logger.info("Añadiendo empleado al proyecto...");
+		return proyectoRepository.addEmpleado(idEmpleado, idProyecto);
+	}
+	
+	public Boolean deleteEmpleadoFromProyecto(ObjectId idEmpleado, ObjectId idProyecto) {
+		logger.info("Eliminando empleado del proyecto...");
+		return proyectoRepository.deleteEmpleado(idEmpleado, idProyecto);
 	}
 
 	//TAREAS

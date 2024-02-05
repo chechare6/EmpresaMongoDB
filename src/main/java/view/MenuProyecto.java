@@ -37,6 +37,12 @@ public class MenuProyecto {
 			case '5':
 				updateProyecto(controller);
 				break;
+			case '6':
+				addEmpleado(controller);
+				break;
+			case '7':
+				deleteEmpleado(controller);
+				break;
 			case '0':
 				Start.main(null);
 				break;
@@ -45,7 +51,7 @@ public class MenuProyecto {
 	}
 
 	private static void verProyectos(Controller controller) {
-		controller.getProyectos();	
+		controller.getProyectos();
 	}
 
 	private static Boolean addProyecto(Controller controller) {
@@ -57,7 +63,25 @@ public class MenuProyecto {
 		Date fechaInicio = Date.valueOf(IO.readLocalDate());
 		IO.print("Fecha de fin: (yyyy-MM-dd)");
 		Date fechaFin = Date.valueOf(IO.readLocalDate());
-		return controller.addProyecto(new Proyecto(nombre, descripcion, fechaInicio, fechaFin));
+		IO.print("Sabes el ID del empleado asignado? (s/n)");
+		ObjectId empleadoId = null;
+		switch (IO.readString().charAt(0)) {
+		case 's':
+			IO.print("Introduzca el ID del empleado");
+			empleadoId = new ObjectId(IO.readString());
+			break;
+		case 'n':
+			controller.getEmpleados();
+			System.out.println("-----------");
+			IO.print("Introduzca el ID del empleado");
+			empleadoId = new ObjectId(IO.readString());
+			break;
+		default:
+			System.out.println("RESPUESTA NO VÁLIDA");
+			break;
+
+		}
+		return controller.addProyecto(new Proyecto(nombre, descripcion, fechaInicio, fechaFin, empleadoId));
 	}
 
 	private static Boolean deleteProyecto(Controller controller) {
@@ -76,5 +100,21 @@ public class MenuProyecto {
 		IO.print("ID del proyecto que buscas: ");
 		ObjectId id = new ObjectId(IO.readString());
 		IO.println(controller.searchProyecto(id));
+	}
+
+	private static Boolean addEmpleado(Controller controller) {
+		IO.print("Introduce el ID del proyecto al que lo quieres agregar: ");
+		ObjectId idProyecto = new ObjectId(IO.readString());
+		IO.print("Introduce el ID del empleado que quieres agregar: ");
+		ObjectId idEmpleado = new ObjectId(IO.readString());
+		return controller.addEmpleadoToProyecto(idEmpleado, idProyecto);
+	}
+
+	private static Boolean deleteEmpleado(Controller controller) {
+		IO.print("Introduce el ID del proyecto al que lo quieres agregar: ");
+		ObjectId idProyecto = new ObjectId(IO.readString());
+		IO.print("Introduce el ID del empleado que quieres agregar: ");
+		ObjectId idEmpleado = new ObjectId(IO.readString());
+		return controller.addEmpleadoToProyecto(idEmpleado, idProyecto);
 	}
 }

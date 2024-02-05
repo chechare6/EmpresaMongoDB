@@ -60,16 +60,7 @@ public class MenuEmpleado {
 		IO.print("Nombre del nuevo empleado: ");
 		String nombre = IO.readString();
 		IO.print("Puesto que ocupa el empleado: ");
-		String puesto = IO.readString();
-//		IO.print("¿Tiene salario?: ");
-//		double salario = (Double) null;
-//		Date fechaEntrada = null;
-//		String sal = IO.readString();
-//		if(sal.equals("Y")) {
-//			IO.print("Introduce salario: ");
-//			salario = IO.readDouble();
-//		}			
-			
+		String puesto = IO.readString();			
 		return controller.addEmpleado(new Empleado(nombre, puesto));
 	}
 

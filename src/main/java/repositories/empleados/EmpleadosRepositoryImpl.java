@@ -39,21 +39,6 @@ public class EmpleadosRepositoryImpl implements EmpleadosRepository {
 
 	@Override
 	public Boolean save(Empleado e) {
-//		if(e.getSalario() != (Double) null) {
-//			if(e.getFechaEntrada() != null) {
-//				
-//			}
-//			try {
-//				MongoCollection<Document> collection = MongoDB.database.getCollection("Empleados");
-//				InsertOneResult result = collection.insertOne(new Document().append("_id", new ObjectId())
-//						.append("nombre", e.getNombre()).append("puesto", e.getPuesto())
-//						.append("salario", e.getSalario()));
-//				IO.println("Se le ha asignado la id: " + result.getInsertedId());
-//				return true;
-//			} catch (Exception ex) {
-//				return false;
-//			}
-//		}
 		try {
 			MongoCollection<Document> collection = MongoDB.database.getCollection("Empleados");
 			InsertOneResult result = collection.insertOne(new Document().append("_id", new ObjectId())
@@ -87,13 +72,12 @@ public class EmpleadosRepositoryImpl implements EmpleadosRepository {
 				String nombre = IO.readString();
 				IO.print("Introduce el nuevo puesto del empleado: ");
 				String puesto = IO.readString();
-				Bson updates = Updates.combine(
-						Updates.set("nombre", nombre),
-						Updates.set("puesto", puesto));
+				Bson updates = Updates.combine(Updates.set("nombre", nombre), Updates.set("puesto", puesto));
 				MongoCollection<Document> collection = MongoDB.database.getCollection("Empleados");
-				try {					
+				try {
 					UpdateResult result = collection.updateOne(empleado, updates);
-					IO.println("Modified document count: " + result.getModifiedCount());;
+					IO.println("Modified document count: " + result.getModifiedCount());
+					;
 					return true;
 				} catch (Exception e) {
 					return false;
@@ -105,9 +89,4 @@ public class EmpleadosRepositoryImpl implements EmpleadosRepository {
 		return false;
 	}
 
-	@Override
-	public void addToProyecto() {
-		// TODO Auto-generated method stub
-		
-	}
 }
