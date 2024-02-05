@@ -14,8 +14,8 @@ public class MenuProyecto {
 	public static void menuProyecto(Controller controller) {
 		System.out.println("MENU PROYECTO");
 		while (true) {
-			List<String> opciones = List.of("EMPLEADOS:\n1. VER", "2. BUSCAR", "3. AÑADIR", "4. ELIMINAR",
-					"5. MODIFICAR", "6. AÑADIR PROYECTO A EMPLEADO", "7. ELIMINAR PROYECTO DE EMPLEADO", "0. VOLVER");
+			List<String> opciones = List.of("PROYECTOS:\n1. VER", "2. BUSCAR", "3. AÑADIR", "4. ELIMINAR",
+					"5. MODIFICAR", "6. AÑADIR EMPLEADO A PROYECTO", "7. ELIMINAR EMPLEADO A PROYECTO", "0. VOLVER");
 			IO.println(opciones);
 			switch (IO.readString().charAt(0)) {
 			case '1':
@@ -48,7 +48,7 @@ public class MenuProyecto {
 		controller.getProyectos();	
 	}
 
-	private static boolean addProyecto(Controller controller) {
+	private static Boolean addProyecto(Controller controller) {
 		IO.print("Nombre del nuevo proyecto: ");
 		String nombre = IO.readString();
 		IO.print("Descipcion del mismo: ");
@@ -60,20 +60,21 @@ public class MenuProyecto {
 		return controller.addProyecto(new Proyecto(nombre, descripcion, fechaInicio, fechaFin));
 	}
 
-	private static boolean deleteProyecto(Controller controller) {
-		IO.print("Introduce el nombre del proyecto a borrar: ");
-		String nombre = IO.readString();
-		return controller.deleteProyecto(nombre);
+	private static Boolean deleteProyecto(Controller controller) {
+		IO.print("Introduce el ID del proyecto a borrar: ");
+		ObjectId id = new ObjectId(IO.readString());
+		return controller.deleteProyecto(id);
 	}
 
-	private static void updateProyecto(Controller controller) {
-		// TODO Auto-generated method stub
-
+	private static Boolean updateProyecto(Controller controller) {
+		IO.print("Introduce el ID del proyecto a modificar: ");
+		ObjectId id = new ObjectId(IO.readString());
+		return controller.updateProyecto(id);
 	}
 
 	private static void searchProyecto(Controller controller) {
 		IO.print("ID del proyecto que buscas: ");
 		ObjectId id = new ObjectId(IO.readString());
-		controller.searchProyecto(id);
+		IO.println(controller.searchProyecto(id));
 	}
 }

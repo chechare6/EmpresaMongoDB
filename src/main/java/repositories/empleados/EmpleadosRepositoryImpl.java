@@ -39,21 +39,21 @@ public class EmpleadosRepositoryImpl implements EmpleadosRepository {
 
 	@Override
 	public Boolean save(Empleado e) {
-		if(e.getSalario() != (Double) null) {
-			if(e.getFechaEntrada() != null) {
-				
-			}
-			try {
-				MongoCollection<Document> collection = MongoDB.database.getCollection("Empleados");
-				InsertOneResult result = collection.insertOne(new Document().append("_id", new ObjectId())
-						.append("nombre", e.getNombre()).append("puesto", e.getPuesto())
-						.append("salario", e.getSalario()));
-				IO.println("Se le ha asignado la id: " + result.getInsertedId());
-				return true;
-			} catch (Exception ex) {
-				return false;
-			}
-		}
+//		if(e.getSalario() != (Double) null) {
+//			if(e.getFechaEntrada() != null) {
+//				
+//			}
+//			try {
+//				MongoCollection<Document> collection = MongoDB.database.getCollection("Empleados");
+//				InsertOneResult result = collection.insertOne(new Document().append("_id", new ObjectId())
+//						.append("nombre", e.getNombre()).append("puesto", e.getPuesto())
+//						.append("salario", e.getSalario()));
+//				IO.println("Se le ha asignado la id: " + result.getInsertedId());
+//				return true;
+//			} catch (Exception ex) {
+//				return false;
+//			}
+//		}
 		try {
 			MongoCollection<Document> collection = MongoDB.database.getCollection("Empleados");
 			InsertOneResult result = collection.insertOne(new Document().append("_id", new ObjectId())
@@ -66,10 +66,10 @@ public class EmpleadosRepositoryImpl implements EmpleadosRepository {
 	}
 
 	@Override
-	public Boolean delete(String nombre) {
+	public Boolean delete(ObjectId id) {
 		try {
 			MongoCollection<Document> collection = MongoDB.database.getCollection("Empleados");
-			Bson query = eq("nombre", nombre);
+			Bson query = eq("_id", id);
 			DeleteResult result = collection.deleteOne(query);
 			IO.println("Se ha borrado " + result.getDeletedCount() + " entrada/s.");
 			return true;

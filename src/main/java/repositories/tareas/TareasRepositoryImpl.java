@@ -57,10 +57,10 @@ public class TareasRepositoryImpl implements TareasRepository {
 	}
 
 	@Override
-	public Boolean delete(String nombre) {
+	public Boolean delete(ObjectId id) {
 		try {
 			MongoCollection<Document> collection = MongoDB.database.getCollection("Tareas");
-			Bson query = eq("nombre", nombre);
+			Bson query = eq("_id", id);
 			DeleteResult result = collection.deleteOne(query);
 			IO.println("Se ha borrado " + result.getDeletedCount() + " entrada/s.");
 			return true;
@@ -104,5 +104,11 @@ public class TareasRepositoryImpl implements TareasRepository {
 			IO.print("La tarea con el ID proporcionado no existe.");
 			return false;
 		}
+	}
+
+	@Override
+	public Document getByState(ObjectId id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

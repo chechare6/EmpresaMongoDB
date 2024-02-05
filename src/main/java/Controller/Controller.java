@@ -6,6 +6,7 @@ import model.Tarea;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
+import IO.IO;
 import model.Empleado;
 import model.Proyecto;
 import repositories.empleados.EmpleadosRepository;
@@ -60,10 +61,10 @@ public class Controller {
 	 * @param nombre [Del empleado a borrar]
 	 * @return true si se borra con éxito, false en caso contario
 	 */
-	public Boolean deleteEmpleado(String nombre) {
+	public Boolean deleteEmpleado(ObjectId id) {
 		/* TODO: AQUI TENEMOS QUE MIRAR SI HAY MÁS DE UN EMPLEADO CON ESE NOMBRE Y HACER ELEGIR, ¿O BORRAR SEGÚN ID? */
 		logger.info("Borrando empleado...");
-		return empleadosRepository.delete(nombre);
+		return empleadosRepository.delete(id);
 	}
 	
 	public Boolean updateEmpleado(ObjectId id) {
@@ -77,9 +78,9 @@ public class Controller {
 		proyectoRepository.getAll();
 	}
 	
-	public void searchProyecto(ObjectId id) {
+	public Document searchProyecto(ObjectId id) {
 		logger.info("Buscando proyecto...");
-		proyectoRepository.getById(id);
+		return proyectoRepository.getById(id);
 	}
 	
 	public Boolean addProyecto(Proyecto p) {
@@ -87,10 +88,15 @@ public class Controller {
 		return proyectoRepository.save(p);
 	}
 
-	public Boolean deleteProyecto(String nombre) {
+	public Boolean deleteProyecto(ObjectId id) {
 		logger.info("Borrando proyecto...");
-		return proyectoRepository.delete(nombre);
+		return proyectoRepository.delete(id);
 		
+	}
+	
+	public Boolean updateProyecto(ObjectId id) {
+		logger.info("Modificando proyecto...");
+		return proyectoRepository.update(id);
 	}
 
 	//TAREAS
@@ -103,15 +109,15 @@ public class Controller {
 		return tareasRepository.save(t);
 	}
 
-	public boolean deleteTarea(String nombre){
-		return tareasRepository.delete(nombre);
+	public Boolean deleteTarea(ObjectId id){
+		return tareasRepository.delete(id);
 	}
 	public Boolean updateTarea(ObjectId id) {
 		logger.info("Modificando empleado...");
 		return tareasRepository.update(id);
 	}
 	public Document searchTarea(ObjectId id) {
-		logger.info("Buscando empleado...");
+		logger.info("Buscando tarea...");
 		return tareasRepository.getById(id);
 	}
 }

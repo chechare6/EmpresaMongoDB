@@ -42,7 +42,7 @@ public class MenuTarea {
 				case '5':
 					//updateState(controller);
 				case '6':
-					String tryDelete = ( deleteTarea(controller) ? "Tarea eliminada correctamente" : "No se ha podido eliminar");
+					String tryDelete = (deleteTarea(controller) ? "Tarea eliminada correctamente" : "No se ha podido eliminar");
 					IO.println(tryDelete);
 					break;
 				case '0':
@@ -63,7 +63,7 @@ public class MenuTarea {
 		//TODO: Tocar el CRUD repository para encontrarlo por estado
 	}
 
-	private static boolean addTarea(Controller controller){
+	private static Boolean addTarea(Controller controller){
 		IO.print("Introduce el nombre de la tarea: ");
 		String nombre = IO.readString();
 		IO.print("Descripcion de la tarea: ");
@@ -92,16 +92,16 @@ public class MenuTarea {
 		return controller.addTarea(new Tarea(nombre, descripcion, fechaFin, proyectoID));
 	}
 
-	private static boolean updateTarea(Controller controller){
+	private static Boolean updateTarea(Controller controller){
 		IO.print("Introduce el ID de la tarea a modificar: ");
 		ObjectId id = new ObjectId(IO.readString());
 		return controller.updateTarea(id);
 	}
 
-	private static boolean deleteTarea(Controller controller){
+	private static Boolean deleteTarea(Controller controller){
 		IO.print("Introduce el nombre de la tarea a borrar: ");
-		String nombre = IO.readString();
-		return controller.deleteTarea(nombre);
+		ObjectId id = new ObjectId(IO.readString());
+		return controller.deleteTarea(id);
 	}
 
 
