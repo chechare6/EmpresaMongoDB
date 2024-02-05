@@ -68,7 +68,7 @@ public class EmpleadosRepositoryImpl implements EmpleadosRepository {
 		Document empleado = getById(id);
 		if (empleado != null) {
 			try {
-				IO.print("Intoduce el nuevo nombre del empleado: ");
+				IO.print("Introduce el nuevo nombre del empleado: ");
 				String nombre = IO.readString();
 				IO.print("Introduce el nuevo puesto del empleado: ");
 				String puesto = IO.readString();
@@ -77,7 +77,6 @@ public class EmpleadosRepositoryImpl implements EmpleadosRepository {
 				try {
 					UpdateResult result = collection.updateOne(empleado, updates);
 					IO.println("Modified document count: " + result.getModifiedCount());
-					;
 					return true;
 				} catch (Exception e) {
 					return false;

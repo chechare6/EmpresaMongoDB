@@ -42,12 +42,10 @@ public class ProyectoRepositoryImpl implements ProyectoRepository {
 	public Boolean save(Proyecto p) {
 		try {
 			MongoCollection<Document> collection = MongoDB.database.getCollection("Proyectos");
-			InsertOneResult result = collection.insertOne(new Document()
-					.append("_id", new ObjectId())
-					.append("nombre", p.getNombre())
-					.append("descripcion", p.getDescripcion())
-					.append("fecha_inicio", p.getFecha_inicio())
-					.append("fecha_fin", p.getFecha_fin()));
+			InsertOneResult result = collection.insertOne(new Document().append("_id", new ObjectId())
+					.append("nombre", p.getNombre()).append("descripcion", p.getDescripcion())
+					.append("fecha_inicio", p.getFecha_inicio()).append("fecha_fin", p.getFecha_fin())
+					.append("idEmpleado", p.getIdEmpleado()));
 			IO.println("Se le ha asignado la id: " + result.getInsertedId());
 			return true;
 		} catch (Exception ex) {
@@ -81,15 +79,13 @@ public class ProyectoRepositoryImpl implements ProyectoRepository {
 				Date fecha_inicio = Date.valueOf(IO.readLocalDate());
 				IO.print("Introduce la nueva fecha de fin: (yyyy-MM-dd)");
 				Date fecha_fin = Date.valueOf(IO.readLocalDate());
-				Bson updates = Updates.combine(
-						Updates.set("nombre", nombre),
-						Updates.set("descripcion", descripcion),
-						Updates.set("fecha_inicio", fecha_inicio),
-						Updates.set("fecha_fin", fecha_fin));
+				Bson updates = Updates.combine(Updates.set("nombre", nombre), Updates.set("descripcion", descripcion),
+						Updates.set("fecha_inicio", fecha_inicio), Updates.set("fecha_fin", fecha_fin));
 				MongoCollection<Document> collection = MongoDB.database.getCollection("Proyectos");
-				try {					
+				try {
 					UpdateResult result = collection.updateOne(proyecto, updates);
-					IO.println("Modified document count: " + result.getModifiedCount());;
+					IO.println("Modified document count: " + result.getModifiedCount());
+					;
 					return true;
 				} catch (Exception e) {
 					return false;
@@ -103,46 +99,57 @@ public class ProyectoRepositoryImpl implements ProyectoRepository {
 
 //	@Override
 //	public Boolean addEmpleado(ObjectId idEmpleado, ObjectId idProyecto) {
-//		Document proyecto = getById(idProyecto);
-//		if (proyecto != null) {
-//			try {
-//				MongoCollection<Document> collection = MongoDB.database.getCollection("Proyectos");
-//				try {
-//					if(proyecto.get("idEmpleado").equals(null)) { // TODO: Mirar si hace bien la comparativa
-//					UpdateResult result = collection.updateOne(proyecto, Updates.set("idEmpleado", idEmpleado)); 
-//					IO.println("Modified document count: " + result.getModifiedCount());
-//					return true;
-//					} else {
-//						IO.println("El proyecto ya esta asignado a un empleado");
-//					}
-//				} catch (Exception e) {
-//					return false;
-//				}
-//			} catch (Exception e) {
-//				return false;
-//			}
-//		}
-//		return false;
+//		// TODO Auto-generated method stub
+//		return null;
 //	}
 //
 //	@Override
-//	public Boolean deleteEmpleado(ObjectId idProyecto) {
-//		Document proyecto = getById(idProyecto);
-//		if (proyecto != null) {
-//			try {
-//				MongoCollection<Document> collection = MongoDB.database.getCollection("Proyectos");
-//				try {					
-//					UpdateResult result = collection.updateOne(proyecto, Updates.set("idEmpleado", idEmpleado)); 
-//					IO.println("Modified document count: " + result.getModifiedCount());
-//					return true;
-//				} catch (Exception e) {
-//					return false;
-//				}
-//			} catch (Exception e) {
-//				return false;
-//			}
-//		}
-//		return false;
-//		
+//	public Boolean deleteEmpleado(ObjectId idEmpleado, ObjectId idProyecto) {
+//		// TODO Auto-generated method stub
+//		return null;
 //	}
+
+	@Override
+	public Boolean addEmpleado(ObjectId idEmpleado, ObjectId idProyecto) {
+		Document proyecto = getById(idProyecto);
+		if((proyecto.getObjectId("idEmpleado") == null)) {
+			try {
+				Bson updates = Updates.set("idEmpleado", idEmpleado);
+				MongoCollection<Document> collection = MongoDB.database.getCollection("Proyectos");
+				try {
+					UpdateResult result = collection.updateOne(proyecto, updates);
+					IO.println("Modified document count: " + result.getModifiedCount());
+					return true;
+				} catch (Exception e) {
+					return false;
+				}
+			} catch (Exception e) {
+				return false;
+			}
+		} else {
+			IO.println("Este proyecto ya tiene asignado un empleado.");
+			return false;
+		}
+	}
+
+	@Override
+	public Boolean deleteEmpleado(ObjectId idEmpleado, ObjectId idProyecto) {
+		Document proyecto = getById(idProyecto);
+		if (proyecto != null) {
+			try {
+				MongoCollection<Document> collection = MongoDB.database.getCollection("Proyectos");
+				try {
+					UpdateResult result = collection.updateOne(proyecto, Updates.set("idEmpleado", idEmpleado));
+					IO.println("Modified document count: " + result.getModifiedCount());
+					return true;
+				} catch (Exception e) {
+					return false;
+				}
+			} catch (Exception e) {
+				return false;
+			}
+		}
+		return false;
+
+	}
 }

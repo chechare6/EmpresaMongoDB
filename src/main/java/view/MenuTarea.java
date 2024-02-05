@@ -70,6 +70,9 @@ public class MenuTarea {
 		String descripcion = IO.readString();
 		IO.print("Fecha de vencimiento de la tarea: (yyyy-MM-dd): ");
 		Date fechaFin = Date.valueOf(IO.readLocalDate());
+		/*
+		 * Se puede simplificar
+		 */
 		IO.print("Sabes el ID del proyecto? (s/n)");
 		String proyectoID="";
 		switch (IO.readString().charAt(0)){
