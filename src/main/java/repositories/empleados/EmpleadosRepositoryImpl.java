@@ -40,6 +40,9 @@ public class EmpleadosRepositoryImpl implements EmpleadosRepository {
 	@Override
 	public Boolean save(Empleado e) {
 		if(e.getSalario() != (Double) null) {
+			if(e.getFechaEntrada() != null) {
+				
+			}
 			try {
 				MongoCollection<Document> collection = MongoDB.database.getCollection("Empleados");
 				InsertOneResult result = collection.insertOne(new Document().append("_id", new ObjectId())
