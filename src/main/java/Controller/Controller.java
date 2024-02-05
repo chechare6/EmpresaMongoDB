@@ -125,8 +125,8 @@ public class Controller {
 		logger.info("Modificando empleado...");
 		return tareasRepository.update(id);
 	}
-	public Document searchTarea(ObjectId id) {
-		logger.info("Buscando tarea...");
-		return tareasRepository.getById(id);
+	public Document searchTareaByState(String state) {
+		logger.info("Buscando tarea por estado...");
+		return tareasRepository.getByState(state);
 	}
 }
