@@ -56,10 +56,10 @@ public class MenuTarea {
 		controller.getTareas();
 	}
 
-	private static Document searchTareaByState(Controller controller){
-		IO.print("Introduce la ID de la tarea: ");
-		ObjectId id = new ObjectId(IO.readString());
-		return controller.searchTarea(id);
+	private static void searchTareaByState(Controller controller){
+		IO.print("Introduce el estado de la tarea: ");
+		String state = IO.readString();
+		IO.println(controller.searchTareaByState(state));
 		//TODO: Tocar el CRUD repository para encontrarlo por estado
 	}
 

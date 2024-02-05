@@ -107,8 +107,14 @@ public class TareasRepositoryImpl implements TareasRepository {
 	}
 
 	@Override
-	public Document getByState(ObjectId id) {
+	public Document getByState(String estado) {
 		// TODO Auto-generated method stub
+		MongoCollection<Document> doc = MongoDB.database.getCollection("Tareas");
+		ArrayList<Document> tareas = new ArrayList<>();
+		doc.find(eq("estado", estado)).into(tareas);
+		for (Document tarea : tareas) {
+			IO.println(tarea);
+		}
 		return null;
 	}
 }
