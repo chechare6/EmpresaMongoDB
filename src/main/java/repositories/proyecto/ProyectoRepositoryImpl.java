@@ -133,13 +133,14 @@ public class ProyectoRepositoryImpl implements ProyectoRepository {
 	}
 
 	@Override
-	public Boolean deleteEmpleado(ObjectId idEmpleado, ObjectId idProyecto) {
+	public Boolean deleteEmpleado(ObjectId idProyecto) {
 		Document proyecto = getById(idProyecto);
-		if (proyecto != null) {
+		if (proyecto.getObjectId("idEmpleado") != null) {
 			try {
+				Bson update = Updates.set("idEmpleado", null);
 				MongoCollection<Document> collection = MongoDB.database.getCollection("Proyectos");
 				try {
-					UpdateResult result = collection.updateOne(proyecto, Updates.set("idEmpleado", idEmpleado));
+					UpdateResult result = collection.updateOne(proyecto, update);
 					IO.println("Modified document count: " + result.getModifiedCount());
 					return true;
 				} catch (Exception e) {
@@ -148,8 +149,9 @@ public class ProyectoRepositoryImpl implements ProyectoRepository {
 			} catch (Exception e) {
 				return false;
 			}
+		} else {
+			
+			return false;
 		}
-		return false;
-
 	}
 }

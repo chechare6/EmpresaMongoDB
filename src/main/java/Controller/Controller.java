@@ -103,9 +103,9 @@ public class Controller {
 		return proyectoRepository.addEmpleado(idEmpleado, idProyecto);
 	}
 	
-	public Boolean deleteEmpleadoFromProyecto(ObjectId idEmpleado, ObjectId idProyecto) {
+	public Boolean deleteEmpleadoFromProyecto(ObjectId idProyecto) {
 		logger.info("Eliminando empleado del proyecto...");
-		return proyectoRepository.deleteEmpleado(idEmpleado, idProyecto);
+		return proyectoRepository.deleteEmpleado(idProyecto);
 	}
 
 	//TAREAS

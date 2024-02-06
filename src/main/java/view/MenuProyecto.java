@@ -117,7 +117,10 @@ public class MenuProyecto {
 	}
 
 	private static Boolean deleteEmpleado(Controller controller) {
-		/* TODO: BORRAR ID (IdEmpleados) EN PROYECTOS */
+		//LO ESTAMOS HACIENDO POR ID DE PROYECTO - LO CAMBIAMOS??
+		IO.print("Introduce el ID del proyecto del que eliminaremos empleado: ");
+		ObjectId id = new ObjectId(IO.readString());
+		controller.deleteEmpleadoFromProyecto(id);
 		return null;
 	}
 }
