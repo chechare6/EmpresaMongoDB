@@ -2,7 +2,6 @@ package repositories.tareas;
 
 import static com.mongodb.client.model.Filters.eq;
 
-import java.sql.Date;
 import java.util.ArrayList;
 
 import com.mongodb.client.model.Updates;
@@ -40,16 +39,29 @@ public class TareasRepositoryImpl implements TareasRepository {
 
 	@Override
 	public Boolean save(Tarea t) {
-		try {
-			MongoCollection<Document> collection = MongoDB.database.getCollection("Tareas");
-			InsertOneResult result = collection.insertOne(new Document().append("_id", new ObjectId())
-					.append("nombre", t.getNombre()).append("descripcion", t.getDescripcion())
-					.append("estado", t.getEstado()).append("fecha_vencimiento", t.getFecha_vencimiento())
-					.append("id_proyecto", t.getId_proyecto()));
-			IO.println("Se le ha asignado la id: " + result.getInsertedId());
-			return true;
-		} catch (Exception ex) {
-			return false;
+		if (t.getId_proyecto() != null) {
+			try {
+				MongoCollection<Document> collection = MongoDB.database.getCollection("Tareas");
+				InsertOneResult result = collection.insertOne(new Document().append("_id", new ObjectId())
+						.append("nombre", t.getNombre()).append("descripcion", t.getDescripcion())
+						.append("estado", t.getEstado()).append("fecha_vencimiento", t.getFecha_vencimiento())
+						.append("id_proyecto", t.getId_proyecto()));
+				IO.println("Se le ha asignado la id: " + result.getInsertedId());
+				return true;
+			} catch (Exception ex) {
+				return false;
+			}
+		} else {
+			try {
+				MongoCollection<Document> collection = MongoDB.database.getCollection("Tareas");
+				InsertOneResult result = collection.insertOne(new Document().append("_id", new ObjectId())
+						.append("nombre", t.getNombre()).append("descripcion", t.getDescripcion())
+						.append("estado", t.getEstado()).append("fecha_vencimiento", t.getFecha_vencimiento()));
+				IO.println("Se le ha asignado la id: " + result.getInsertedId());
+				return true;
+			} catch (Exception ex) {
+				return false;
+			}
 		}
 	}
 
@@ -67,37 +79,32 @@ public class TareasRepositoryImpl implements TareasRepository {
 	}
 
 	@Override
-	public Boolean update(ObjectId id) {
-		Document tarea = getById(id);
+	public Boolean update(Tarea t) {
+		Document tarea = getById(t.get_id());
 		if (tarea != null) {
 			try {
-				IO.print("Introduce el nuevo nombre da la tarea: ");
-				String nombre = IO.readString();
-				IO.print("Introduce la nueva descripcion de la tarea: ");
-				String descripcion = IO.readString();
-				IO.print("Introduce la nueva Fecha de vencimiento de la tarea: (yyyy-MM-dd): ");
-				Date fechaFin = Date.valueOf(IO.readLocalDate());
-
-				Bson updates = Updates.combine(Updates.set("nombre", nombre), Updates.set("descripcion", descripcion),
-						Updates.set("fecha_vencimiento", fechaFin));
-
-				MongoCollection<Document> doc = MongoDB.database.getCollection("Tareas");
-				UpdateResult result = doc.updateOne(eq("_id", id), updates);
-				if (result.getModifiedCount() > 0) {
-					IO.print("Tarea actualizada exitosamente.");
-					return true;
+				if (t.getId_proyecto() != null) {
+					Bson updates = Updates.combine(Updates.set("nombre", t.getNombre()),
+							Updates.set("descripcion", t.getDescripcion()),
+							Updates.set("fecha_vencimiento", t.getFecha_vencimiento()),
+							Updates.set("id_proyecto", t.getId_proyecto()));
+					MongoCollection<Document> doc = MongoDB.database.getCollection("Tareas");
+					UpdateResult result = doc.updateOne(eq("_id", t.get_id()), updates);
+					IO.println("Se han modificado: " + result.getModifiedCount() + " registros.");
 				} else {
-					IO.print("No se pudo actualizar la tarea.");
-					return false;
+					Bson updates = Updates.combine(Updates.set("nombre", t.getNombre()),
+							Updates.set("descripcion", t.getDescripcion()),
+							Updates.set("fecha_vencimiento", t.getFecha_vencimiento()));
+					MongoCollection<Document> doc = MongoDB.database.getCollection("Tareas");
+					UpdateResult result = doc.updateOne(eq("_id", t.get_id()), updates);
+					IO.println("Se han modificado: " + result.getModifiedCount() + " registros.");
 				}
+				return true;
 			} catch (Exception e) {
-				IO.print("Error al ingresar los nuevos valores.");
-				return false;
+				IO.println("Error al ingresar los nuevos valores: " + e.getMessage());
 			}
-		} else {
-			IO.print("La tarea con el ID proporcionado no existe.");
-			return false;
 		}
+		return false;
 	}
 
 	@Override
@@ -106,10 +113,10 @@ public class TareasRepositoryImpl implements TareasRepository {
 		MongoCollection<Document> doc = MongoDB.database.getCollection("Tareas");
 		ArrayList<Document> tareas = new ArrayList<>();
 		doc.find(eq("estado", estado)).into(tareas);
-		if(!tareas.isEmpty()) {
+		if (!tareas.isEmpty()) {
 			for (Document tarea : tareas) {
 				IO.println(tarea);
-			}			
+			}
 		} else {
 			IO.println("No se han encontrado tareas con ese estado.");
 		}

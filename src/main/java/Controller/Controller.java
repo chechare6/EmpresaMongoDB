@@ -66,9 +66,9 @@ public class Controller {
 		return empleadosRepository.delete(id);
 	}
 	
-	public Boolean updateEmpleado(ObjectId id) {
+	public Boolean updateEmpleado(Empleado e) {
 		logger.info("Modificando empleado...");
-		return empleadosRepository.update(id);
+		return empleadosRepository.update(e);
 	}
 
 	// PROYECTOS
@@ -93,9 +93,9 @@ public class Controller {
 		
 	}
 	
-	public Boolean updateProyecto(ObjectId id) {
+	public Boolean updateProyecto(Proyecto p) {
 		logger.info("Modificando proyecto...");
-		return proyectoRepository.update(id);
+		return proyectoRepository.update(p);
 	}
 	
 	public Boolean addEmpleadoToProyecto(ObjectId idEmpleado, ObjectId idProyecto) {
@@ -113,6 +113,12 @@ public class Controller {
 		logger.info("Obteniendo tareas...");
 		tareasRepository.getAll();
 	}
+	
+	public Document searchTarea(ObjectId id) {
+		logger.info("Buscando tarea...");
+		return tareasRepository.getById(id);
+	}
+	
 	public boolean addTarea(Tarea t){
 		logger.info("Añadiendo tarea...");
 		return tareasRepository.save(t);
@@ -121,9 +127,9 @@ public class Controller {
 	public Boolean deleteTarea(ObjectId id){
 		return tareasRepository.delete(id);
 	}
-	public Boolean updateTarea(ObjectId id) {
+	public Boolean updateTarea(Tarea t) {
 		logger.info("Modificando empleado...");
-		return tareasRepository.update(id);
+		return tareasRepository.update(t);
 	}
 	public void searchTareaByState(String state) {
 		logger.info("Buscando tarea por estado...");

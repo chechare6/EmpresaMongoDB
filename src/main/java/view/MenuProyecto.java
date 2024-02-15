@@ -1,8 +1,6 @@
 package view;
 
 import java.sql.Date;
-import java.util.List;
-
 import org.bson.types.ObjectId;
 
 import Controller.Controller;
@@ -14,9 +12,19 @@ public class MenuProyecto {
 	public static void menuProyecto(Controller controller) {
 		System.out.println("MENU PROYECTO");
 		while (true) {
-			List<String> opciones = List.of("PROYECTOS:\n1. VER", "2. BUSCAR", "3. AÑADIR", "4. ELIMINAR",
-					"5. MODIFICAR", "6. AÑADIR EMPLEADO A PROYECTO", "7. ELIMINAR EMPLEADO DE PROYECTO", "0. VOLVER");
-			IO.println(opciones);
+			IO.println("╔══════════════════════════════════╗");
+	        IO.println("║          MENÚ PROYECTOS          ║");
+	        IO.println("╠══════════════════════════════════╣");
+	        IO.println("║ 1. VER                           ║");
+	        IO.println("║ 2. BUSCAR                        ║");
+	        IO.println("║ 3. AÑADIR                        ║");
+	        IO.println("║ 4. ELIMINAR                      ║");
+	        IO.println("║ 5. MODIFICAR                     ║");
+	        IO.println("║ 6. AÑADIR EMPLEADO A PROYECTO    ║");
+	        IO.println("║ 7. ELIMINAR EMPLEADO DE PROYECTO ║");
+	        IO.println("║ 0. VOLVER                        ║");
+	        IO.println("╚══════════════════════════════════╝");
+	        IO.print("OPCIÓN: ");
 			switch (IO.readString().charAt(0)) {
 			case '1':
 				verProyectos(controller);
@@ -77,7 +85,7 @@ public class MenuProyecto {
 			idEmpleado = null;
 			break;
 		default:
-			IO.println("Esa respuesta no es válida");
+			IO.println("Esa respuesta no es válida.");
 		}
 		return controller.addProyecto(new Proyecto(nombre, descripcion, fechaInicio, fechaFin, idEmpleado));
 	}
@@ -91,7 +99,36 @@ public class MenuProyecto {
 	private static Boolean updateProyecto(Controller controller) {
 		IO.print("Introduce el ID del proyecto a modificar: ");
 		ObjectId id = new ObjectId(IO.readString());
-		return controller.updateProyecto(id);
+		if(!controller.searchProyecto(id).isEmpty()) {
+			IO.print("Intoduce el nuevo nombre del proyecto: ");
+			String nombre = IO.readString();
+			IO.print("Intoduce la nueva descripcion del proyecto: ");
+			String descripcion = IO.readString();
+			IO.print("Introduce la nueva fecha de inicio: (yyyy-MM-dd) ");
+			Date fecha_inicio = Date.valueOf(IO.readLocalDate());
+			IO.print("Introduce la nueva fecha de fin: (yyyy-MM-dd) ");
+			Date fecha_fin = Date.valueOf(IO.readLocalDate());
+			IO.print("¿Modificar empleado asignado al proyecto? (S/N): ");
+			ObjectId idEmpleado = null;
+			switch(IO.readString().toUpperCase()) {
+			case "S":
+				IO.println("------------");
+				controller.getEmpleados();
+				IO.println("------------");
+				IO.print("Introduce el id del empleado deseado: ");
+				idEmpleado = new ObjectId(IO.readString());
+				break;
+			case "N":
+				idEmpleado = null;
+				break;
+			default:
+				IO.print("Esa respuesta no es válida.");
+			}
+			return controller.updateProyecto(new Proyecto(id, nombre, descripcion, fecha_inicio, fecha_fin, idEmpleado));
+		} else {
+			IO.println("No existe un proyecto con esa ID.");
+			return false;
+		}
 	}
 
 	private static void searchProyecto(Controller controller) {
@@ -117,7 +154,6 @@ public class MenuProyecto {
 	}
 
 	private static Boolean deleteEmpleado(Controller controller) {
-		//LO ESTAMOS HACIENDO POR ID DE PROYECTO - LO CAMBIAMOS??
 		IO.print("Introduce el ID del proyecto del que eliminaremos empleado: ");
 		ObjectId id = new ObjectId(IO.readString());
 		controller.deleteEmpleadoFromProyecto(id);

@@ -2,7 +2,6 @@ package repositories.proyecto;
 
 import static com.mongodb.client.model.Filters.eq;
 
-import java.sql.Date;
 import java.util.ArrayList;
 
 import org.bson.Document;
@@ -40,16 +39,29 @@ public class ProyectoRepositoryImpl implements ProyectoRepository {
 
 	@Override
 	public Boolean save(Proyecto p) {
-		try {
-			MongoCollection<Document> collection = MongoDB.database.getCollection("Proyectos");
-			InsertOneResult result = collection.insertOne(new Document().append("_id", new ObjectId())
-					.append("nombre", p.getNombre()).append("descripcion", p.getDescripcion())
-					.append("fecha_inicio", p.getFecha_inicio()).append("fecha_fin", p.getFecha_fin())
-					.append("idEmpleado", p.getIdEmpleado()));
-			IO.println("Se le ha asignado la id: " + result.getInsertedId());
-			return true;
-		} catch (Exception ex) {
-			return false;
+		if (p.getIdEmpleado() != null) {
+			try {
+				MongoCollection<Document> collection = MongoDB.database.getCollection("Proyectos");
+				InsertOneResult result = collection
+						.insertOne(new Document().append("_id", new ObjectId()).append("nombre", p.getNombre())
+								.append("descripcion", p.getDescripcion()).append("fecha_inicio", p.getFecha_inicio())
+								.append("fecha_fin", p.getFecha_fin()).append("idEmpleado", p.getIdEmpleado()));
+				IO.println("Se le ha asignado la id: " + result.getInsertedId());
+				return true;
+			} catch (Exception ex) {
+				return false;
+			}
+		} else {
+			try {
+				MongoCollection<Document> collection = MongoDB.database.getCollection("Proyectos");
+				InsertOneResult result = collection.insertOne(new Document().append("_id", new ObjectId())
+						.append("nombre", p.getNombre()).append("descripcion", p.getDescripcion())
+						.append("fecha_inicio", p.getFecha_inicio()).append("fecha_fin", p.getFecha_fin()));
+				IO.println("Se le ha asignado la id: " + result.getInsertedId());
+				return true;
+			} catch (Exception ex) {
+				return false;
+			}
 		}
 	}
 
@@ -67,52 +79,39 @@ public class ProyectoRepositoryImpl implements ProyectoRepository {
 	}
 
 	@Override
-	public Boolean update(ObjectId id) {
-		Document proyecto = getById(id);
+	public Boolean update(Proyecto p) {
+		Document proyecto = getById(p.get_id());
 		if (proyecto != null) {
 			try {
-				IO.print("Intoduce el nuevo nombre del proyecto: ");
-				String nombre = IO.readString();
-				IO.print("Intoduce la nueva descripcion del proyecto: ");
-				String descripcion = IO.readString();
-				IO.print("Introduce la nueva fecha de inicio: (yyyy-MM-dd)");
-				Date fecha_inicio = Date.valueOf(IO.readLocalDate());
-				IO.print("Introduce la nueva fecha de fin: (yyyy-MM-dd)");
-				Date fecha_fin = Date.valueOf(IO.readLocalDate());
-				Bson updates = Updates.combine(Updates.set("nombre", nombre), Updates.set("descripcion", descripcion),
-						Updates.set("fecha_inicio", fecha_inicio), Updates.set("fecha_fin", fecha_fin));
-				MongoCollection<Document> collection = MongoDB.database.getCollection("Proyectos");
-				try {
+				if (p.getIdEmpleado() != null) {
+					Bson updates = Updates.combine(Updates.set("nombre", p.getNombre()),
+							Updates.set("descripcion", p.getDescripcion()),
+							Updates.set("fecha_inicio", p.getFecha_inicio()),
+							Updates.set("fecha_fin", p.getFecha_fin()), Updates.set("idEmpleado", p.getIdEmpleado()));
+					MongoCollection<Document> collection = MongoDB.database.getCollection("Proyectos");
 					UpdateResult result = collection.updateOne(proyecto, updates);
-					IO.println("Modified document count: " + result.getModifiedCount());
-					;
-					return true;
-				} catch (Exception e) {
-					return false;
+					IO.println("Se han modificado: " + result.getModifiedCount() + " registros.");
+				} else {
+					Bson updates = Updates.combine(Updates.set("nombre", p.getNombre()),
+							Updates.set("descripcion", p.getDescripcion()),
+							Updates.set("fecha_inicio", p.getFecha_inicio()),
+							Updates.set("fecha_fin", p.getFecha_fin()), Updates.set("idEmpleado", p.getIdEmpleado()));
+					MongoCollection<Document> collection = MongoDB.database.getCollection("Proyectos");
+					UpdateResult result = collection.updateOne(proyecto, updates);
+					IO.println("Se han modificado: " + result.getModifiedCount() + " registros.");
 				}
+				return true;
 			} catch (Exception e) {
-				return false;
+				IO.println("Error al ingresar los nuevos valores: " + e.getMessage());
 			}
 		}
 		return false;
 	}
 
-//	@Override
-//	public Boolean addEmpleado(ObjectId idEmpleado, ObjectId idProyecto) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//
-//	@Override
-//	public Boolean deleteEmpleado(ObjectId idEmpleado, ObjectId idProyecto) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-
 	@Override
 	public Boolean addEmpleado(ObjectId idEmpleado, ObjectId idProyecto) {
 		Document proyecto = getById(idProyecto);
-		if((proyecto.getObjectId("idEmpleado") == null)) {
+		if ((proyecto.getObjectId("idEmpleado") == null)) {
 			try {
 				Bson updates = Updates.set("idEmpleado", idEmpleado);
 				MongoCollection<Document> collection = MongoDB.database.getCollection("Proyectos");
@@ -150,7 +149,7 @@ public class ProyectoRepositoryImpl implements ProyectoRepository {
 				return false;
 			}
 		} else {
-			
+
 			return false;
 		}
 	}

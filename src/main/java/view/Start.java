@@ -1,6 +1,5 @@
 package view;
 
-import java.util.List;
 import Controller.Controller;
 import IO.IO;
 import conexionDB.MongoDB;
@@ -16,12 +15,17 @@ public class Start {
 				new ProyectoRepositoryImpl(),
 				new TareasRepositoryImpl()
 				);
-		List<String> opciones;
 		while(true) {
-			opciones = List.of("BBDD Empresa ~ MongoDB:\n1. EMPLEADOS", "2. PROYECTOS", "3. TAREAS", "0. CERRAR");
-			IO.println(opciones);
-			int seleccionado = IO.readString().charAt(0);
-			switch (seleccionado) {
+			IO.println("╔══════════════════════════════════╗");
+	        IO.println("║     BBDD EMPRESA ~ MONGO DB      ║");
+	        IO.println("╠══════════════════════════════════╣");
+	        IO.println("║ 1. EMPLEADOS                     ║");
+	        IO.println("║ 2. PROYECTOS                     ║");
+	        IO.println("║ 3. TAREAS                        ║");
+	        IO.println("║ 0. SALIR                         ║");
+	        IO.println("╚══════════════════════════════════╝");
+	        IO.print("OPCIÓN: ");
+			switch (IO.readString().charAt(0)) {
 			case '1':
 				MenuEmpleado.menuEmpleado(controller);
 				break;

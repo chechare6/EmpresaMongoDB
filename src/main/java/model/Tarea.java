@@ -15,9 +15,9 @@ public class Tarea {
 	private String descripcion;
 	private String estado;
 	private Date fecha_vencimiento;
-	private String id_proyecto; //ObjectID?????
+	private ObjectId id_proyecto;
 
-    public Tarea(String nombre, String descripcion, Date fechaFin, String proyectoID) {
+    public Tarea(String nombre, String descripcion, Date fechaFin, ObjectId proyectoID) {
 		super();
 		this.nombre = nombre;
 		this.descripcion = descripcion;

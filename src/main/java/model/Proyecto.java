@@ -27,5 +27,4 @@ public class Proyecto {
 		this.fecha_fin = fecha_fin;
 		this.idEmpleado = idEmpleado;
 	}	
-
 }

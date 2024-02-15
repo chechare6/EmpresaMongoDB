@@ -8,7 +8,7 @@ public interface CrudRepository<T> {
 	Document getById(ObjectId id);
 	Boolean save (T entity);
 	Boolean delete(ObjectId	id);
-	Boolean update(ObjectId	id);
+	Boolean update(T entity);
 	//.-------
 	//Document getByState(ObjectId id);
 }
