@@ -80,7 +80,7 @@ public class TareasRepositoryImpl implements TareasRepository {
 
 	@Override
 	public Boolean update(Tarea t) {
-		Document tarea = getById(t.get_id());
+		Document tarea = getById(t.getId());
 		if (tarea != null) {
 			try {
 				if (t.getId_proyecto() != null) {
@@ -111,7 +111,7 @@ public class TareasRepositoryImpl implements TareasRepository {
 	//-----------------------
 	@Override
 	public boolean updateTareaByState(Tarea t) {
-		Document tarea = getById(t.get_id());
+		Document tarea = getById(t.getId());
 		if (tarea != null) {
 			try {
 					Bson update = Updates.set("estado", t.getEstado());

@@ -133,12 +133,11 @@ public class MenuTarea {
 	
 	private static Boolean updateTareaByState(Controller controller) {
 		IO.print("Introduce el ID de la tarea a modificar: ");
-		ObjectId id = new ObjectId(IO.readString());
-		
+		ObjectId id = new ObjectId(IO.readString());		
 		if (!controller.searchTarea(id).isEmpty()) {
 			IO.print("Introduce el nuevo estado de la tarea: ");
 			String estado = IO.readString();
-			return controller.updateTareaByState(new Tarea(estado));
+			return controller.updateTareaByState(new Tarea(id, estado));
 		}
 		return false;
 	}

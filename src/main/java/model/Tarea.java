@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Tarea {
-	private ObjectId _id;
+	private ObjectId id;
 	private String nombre;
 	private String descripcion;
 	private String estado;
@@ -26,7 +26,8 @@ public class Tarea {
 		this.id_proyecto = proyectoID;
     }
     
-    public Tarea(String estado) {
+    public Tarea(ObjectId id, String estado) {
+    	this.id = id;
     	this.estado = estado;
     }
 }
