@@ -15,11 +15,18 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
 
+/**
+ * Clase que gestiona la conexión y operaciones con la base de datos MongoDB.
+ */
 public class MongoDB {
 	private final String FILE_PROPS = "app.config";
 	private static MongoClient db = null;
 	public static MongoDatabase database = null;
-	
+
+	/**
+	 * Constructor privado para evitar instancias externas. Carga la configuración
+	 * desde un archivo properties y establece la conexión con MongoDB.
+	 */
 	private MongoDB() {
 		Properties props = new Properties();
 		try {
@@ -30,14 +37,23 @@ public class MongoDB {
 		String uri = props.getProperty("protocol") + "://" + props.getProperty("user") + ":" + props.getProperty("pass") + "@" + props.getProperty("host");
 		db = MongoClients.create(uri);
 	}
-	
+
+	/**
+	 * Obtiene una instancia del cliente MongoDB.
+	 *
+	 * @return Cliente MongoDB.
+	 */
 	public static MongoClient getClient() {
 		if(db == null) {
 			new MongoDB();
 		}
 		return db;
 	}
-	
+
+	/**
+	 * Inicializa la base de datos con el proveedor de códecs PojoCodecProvider.
+	 * Utiliza la configuración proporcionada en el archivo properties.
+	 */
 	public static void initDatabase() {
 		CodecProvider pojoCodecProvider = PojoCodecProvider.builder().automatic(true).build();
         CodecRegistry pojoCodecRegistry = fromRegistries(getDefaultCodecRegistry(), fromProviders(pojoCodecProvider));

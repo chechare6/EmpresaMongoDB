@@ -18,11 +18,12 @@ import IO.IO;
 import conexionDB.MongoDB;
 import model.Empleado;
 
+/**
+ * Implementación de la interfaz EmpleadosRepository para realizar operaciones relacionadas con los empleados en MongoDB.
+ */
 public class EmpleadosRepositoryImpl implements EmpleadosRepository {
 
-	/**
-	 * Método para buscar e imprimir a todos los empleados
-	 */
+
 	@Override
 	public void getAll() {
 		MongoCollection<Document> doc = MongoDB.database.getCollection("Empleados");
@@ -33,10 +34,6 @@ public class EmpleadosRepositoryImpl implements EmpleadosRepository {
 		}
 	}
 
-	/**
-	 * Método que busca un empleado según una id proporcionada,
-	 * devuelve el documento de dicho empleado
-	 */
 	@Override
 	public Document getById(ObjectId id) {
 		MongoCollection<Document> doc = MongoDB.database.getCollection("Empleados");
@@ -44,10 +41,6 @@ public class EmpleadosRepositoryImpl implements EmpleadosRepository {
 		return empleado;
 	}
 
-	/**
-	 * Método que añade un empleado a la BBDD según los 
-	 * parámetros proporcionados previamente
-	 */
 	@Override
 	public Boolean save(Empleado e) {
 		if (e.getSalario() != null && e.getFechaEntrada() != null) {
@@ -84,9 +77,7 @@ public class EmpleadosRepositoryImpl implements EmpleadosRepository {
 		return false;
 	}
 
-	/**
-	 * Método que elimina un empleado de la BBDD según la id proporcionada
-	 */
+
 	@Override
 	public Boolean delete(ObjectId id) {
 		try {
@@ -99,10 +90,7 @@ public class EmpleadosRepositoryImpl implements EmpleadosRepository {
 			return false;
 		}
 	}
-	
-	/**
-	 * Método que actualiza un empleado campo por campo
-	 */
+
 	@Override
 	public Boolean update(Empleado e) {
 		Document empleado = getById(e.get_id());

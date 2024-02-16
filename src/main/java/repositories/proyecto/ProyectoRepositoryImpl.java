@@ -18,6 +18,9 @@ import IO.IO;
 import conexionDB.MongoDB;
 import model.Proyecto;
 
+/**
+ * Implementación de la interfaz ProyectoRepository para realizar operaciones relacionadas con los proyectos en MongoDB.
+ */
 public class ProyectoRepositoryImpl implements ProyectoRepository {
 
 	@Override

@@ -18,6 +18,9 @@ import IO.IO;
 import conexionDB.MongoDB;
 import model.Tarea;
 
+/**
+ * Implementación de la interfaz TareasRepository para realizar operaciones relacionadas con las tareas en MongoDB.
+ */
 public class TareasRepositoryImpl implements TareasRepository {
 
 	@Override
