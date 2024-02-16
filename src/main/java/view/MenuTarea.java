@@ -11,7 +11,7 @@ public class MenuTarea {
 	public static void menuTarea(Controller controller) {
 		while (true) {
 			IO.println("╔══════════════════════════════════╗");
-	        IO.println("║          MENÚ PROYECTOS          ║");
+	        IO.println("║          MENÚ TAREAS             ║");
 	        IO.println("╠══════════════════════════════════╣");
 	        IO.println("║ 1. VER                           ║");
 	        IO.println("║ 2. BUSCAR                        ║");
@@ -48,7 +48,7 @@ public class MenuTarea {
 				searchTareaByState(controller);
 				break;
 			case '7':
-				/* TODO: updateTareaState(controller); */
+				 updateTareaByState(controller);
 				break;
 			case '0':
 				Start.main(null);
@@ -129,6 +129,18 @@ public class MenuTarea {
 			IO.print("Esa respuesta no es válida.");
 		}
 		return controller.updateTarea(new Tarea(id, nombre, descripcion, estado, fechaFin, idProyecto));
+	}
+	
+	private static Boolean updateTareaByState(Controller controller) {
+		IO.print("Introduce el ID de la tarea a modificar: ");
+		ObjectId id = new ObjectId(IO.readString());
+		
+		if (!controller.searchTarea(id).isEmpty()) {
+			IO.print("Introduce el nuevo estado de la tarea: ");
+			String estado = IO.readString();
+			return controller.updateTareaByState(new Tarea(estado));
+		}
+		return false;
 	}
 
 	private static Boolean deleteTarea(Controller controller) {

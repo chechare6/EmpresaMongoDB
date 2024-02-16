@@ -89,14 +89,14 @@ public class TareasRepositoryImpl implements TareasRepository {
 							Updates.set("fecha_vencimiento", t.getFecha_vencimiento()),
 							Updates.set("id_proyecto", t.getId_proyecto()));
 					MongoCollection<Document> doc = MongoDB.database.getCollection("Tareas");
-					UpdateResult result = doc.updateOne(eq("_id", t.get_id()), updates);
+					UpdateResult result = doc.updateOne(tarea, updates);
 					IO.println("Se han modificado: " + result.getModifiedCount() + " registros.");
 				} else {
 					Bson updates = Updates.combine(Updates.set("nombre", t.getNombre()),
 							Updates.set("descripcion", t.getDescripcion()),
 							Updates.set("fecha_vencimiento", t.getFecha_vencimiento()));
 					MongoCollection<Document> doc = MongoDB.database.getCollection("Tareas");
-					UpdateResult result = doc.updateOne(eq("_id", t.get_id()), updates);
+					UpdateResult result = doc.updateOne(tarea, updates);
 					IO.println("Se han modificado: " + result.getModifiedCount() + " registros.");
 				}
 				return true;
@@ -106,7 +106,28 @@ public class TareasRepositoryImpl implements TareasRepository {
 		}
 		return false;
 	}
-
+	
+	
+	//-----------------------
+	@Override
+	public boolean updateTareaByState(Tarea t) {
+		Document tarea = getById(t.get_id());
+		if (tarea != null) {
+			try {
+					Bson update = Updates.set("estado", t.getEstado());
+					MongoCollection<Document> doc = MongoDB.database.getCollection("Tareas");
+					UpdateResult result = doc.updateOne(tarea, update);
+					IO.println("Se han modificado: " + result.getModifiedCount() + " registros.");
+				return true;
+			} catch (Exception e) {
+				IO.println("Error al ingresar los nuevis valores: " + e.getMessage());
+			}
+		}
+		
+		return false;
+	}
+	
+	//--------------
 	@Override
 	public void getByState(String estado) {
 		// TODO Auto-generated method stub

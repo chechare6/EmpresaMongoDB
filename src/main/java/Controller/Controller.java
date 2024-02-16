@@ -135,4 +135,11 @@ public class Controller {
 		logger.info("Buscando tarea por estado...");
 		tareasRepository.getByState(state);
 	}
+	
+	//--------
+	public Boolean updateTareaByState(Tarea t) {
+		logger.info("Actualizando el estado de la tarea...");
+		return tareasRepository.updateTareaByState(t);
+	}
+	//--------
 }

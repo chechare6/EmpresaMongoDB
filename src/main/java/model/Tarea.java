@@ -25,4 +25,8 @@ public class Tarea {
 		this.fecha_vencimiento = fechaFin;
 		this.id_proyecto = proyectoID;
     }
+    
+    public Tarea(String estado) {
+    	this.estado = estado;
+    }
 }
