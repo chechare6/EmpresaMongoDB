@@ -16,7 +16,6 @@ public class Empleado {
 	private Double salario;
 	private Date fechaEntrada;
 	
-	// CONSTRUCTORES
 	public Empleado(String nombre, String puesto, Double salario, Date fechaEntrada) {
 		this.nombre = nombre;
 		this.puesto = puesto;

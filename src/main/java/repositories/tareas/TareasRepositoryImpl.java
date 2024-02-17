@@ -110,10 +110,8 @@ public class TareasRepositoryImpl implements TareasRepository {
 		return false;
 	}
 	
-	
-	//-----------------------
 	@Override
-	public boolean updateTareaByState(Tarea t) {
+	public boolean updateByState(Tarea t) {
 		Document tarea = getById(t.getId());
 		if (tarea != null) {
 			try {
@@ -130,7 +128,6 @@ public class TareasRepositoryImpl implements TareasRepository {
 		return false;
 	}
 	
-	//--------------
 	@Override
 	public void getByState(String estado) {
 		// TODO Auto-generated method stub

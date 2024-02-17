@@ -11,18 +11,18 @@ public class MenuTarea {
 	public static void menuTarea(Controller controller) {
 		while (true) {
 			IO.println("╔══════════════════════════════════╗");
-	        IO.println("║          MENÚ TAREAS             ║");
-	        IO.println("╠══════════════════════════════════╣");
-	        IO.println("║ 1. VER                           ║");
-	        IO.println("║ 2. BUSCAR                        ║");
-	        IO.println("║ 3. AÑADIR                        ║");
-	        IO.println("║ 4. ELIMINAR                      ║");
-	        IO.println("║ 5. MODIFICAR                     ║");
-	        IO.println("║ 6. BUSCAR TAREA POR ESTADO       ║");
-	        IO.println("║ 7. CAMBIAR ESTADO DE LA TAREA    ║");
-	        IO.println("║ 0. VOLVER                        ║");
-	        IO.println("╚══════════════════════════════════╝");
-	        IO.print("OPCIÓN: ");
+			IO.println("║          MENÚ TAREAS             ║");
+			IO.println("╠══════════════════════════════════╣");
+			IO.println("║ 1. VER TAREAS                    ║");
+			IO.println("║ 2. BUSCAR POR ID                 ║");
+			IO.println("║ 3. AÑADIR TAREA                  ║");
+			IO.println("║ 4. ELIMINAR TAREA                ║");
+			IO.println("║ 5. MODIFICAR TAREA               ║");
+			IO.println("║ 6. BUSCAR TAREA POR ESTADO       ║");
+			IO.println("║ 7. CAMBIAR ESTADO DE LA TAREA    ║");
+			IO.println("║ 0. VOLVER                        ║");
+			IO.println("╚══════════════════════════════════╝");
+			IO.print("OPCIÓN: ");
 			switch (IO.readString().charAt(0)) {
 			case '1':
 				verTareas(controller);
@@ -48,7 +48,7 @@ public class MenuTarea {
 				searchTareaByState(controller);
 				break;
 			case '7':
-				 updateTareaByState(controller);
+				updateTareaByState(controller);
 				break;
 			case '0':
 				Start.main(null);
@@ -61,7 +61,7 @@ public class MenuTarea {
 		IO.print("ID de la tarea que buscas: ");
 		ObjectId id = new ObjectId(IO.readString());
 		IO.println(controller.searchTarea(id));
-		
+
 	}
 
 	private static void verTareas(Controller controller) {
@@ -81,21 +81,26 @@ public class MenuTarea {
 		String descripcion = IO.readString();
 		IO.print("Fecha de vencimiento de la tarea: (yyyy-MM-dd): ");
 		Date fechaFin = Date.valueOf(IO.readLocalDate());
-		IO.print("¿Está asignado a algún proyecto? (S/N): ");
 		ObjectId idProyecto = null;
-		switch(IO.readString().toUpperCase()) {
-		case "S":
-			IO.println("------------");
-			controller.getProyectos();
-			IO.println("------------");
-			IO.print("Introduzca el ID del proyecto: ");
-			idProyecto = new ObjectId(IO.readString());
-			break;
-		case "N": 
-			idProyecto = null;
-			break;
-		default:
-			IO.println("Esa respuesta no es válida");
+		Boolean condicion = false;
+		while (!condicion) {
+			IO.print("¿Está asignado a algún proyecto? (S/N): ");
+			switch (IO.readString().toUpperCase()) {
+			case "S":
+				IO.println("------------");
+				controller.getProyectos();
+				IO.println("------------");
+				IO.print("Introduzca el ID del proyecto: ");
+				idProyecto = new ObjectId(IO.readString());
+				condicion = true;
+				break;
+			case "N":
+				idProyecto = null;
+				condicion = true;
+				break;
+			default:
+				IO.println("Esa respuesta no es válida");
+			}
 		}
 		return controller.addTarea(new Tarea(nombre, descripcion, fechaFin, idProyecto));
 	}
@@ -103,8 +108,8 @@ public class MenuTarea {
 	private static Boolean updateTarea(Controller controller) {
 		IO.print("Introduce el ID de la tarea a modificar: ");
 		ObjectId id = new ObjectId(IO.readString());
-		if(!controller.searchTarea(id).isEmpty())
-		IO.print("Introduce el nuevo nombre da la tarea: ");
+		if (!controller.searchTarea(id).isEmpty())
+			IO.print("Introduce el nuevo nombre da la tarea: ");
 		String nombre = IO.readString();
 		IO.print("Introduce la nueva descripcion de la tarea: ");
 		String descripcion = IO.readString();
@@ -112,28 +117,34 @@ public class MenuTarea {
 		String estado = IO.readString();
 		IO.print("Introduce la nueva Fecha de vencimiento de la tarea: (yyyy-MM-dd): ");
 		Date fechaFin = Date.valueOf(IO.readLocalDate());
-		IO.print("¿Modificar el proyecto al que está asociada la tarea? (Y/N): ");
 		ObjectId idProyecto = null;
-		switch(IO.readString().toUpperCase()) {
-		case "S":
-			IO.println("------------");
-			controller.getProyectos();
-			IO.println("------------");
-			IO.print("Introduce el id del proyecto deseado: ");
-			idProyecto = new ObjectId(IO.readString());
-			break;
-		case "N":
-			idProyecto = null;
-			break;
-		default:
-			IO.print("Esa respuesta no es válida.");
+		Boolean condicion = false;
+		while (!condicion) {
+			IO.print("¿Modificar el proyecto al que está asociada la tarea? (S/N): ");
+			switch (IO.readString().toUpperCase()) {
+			case "S":
+				IO.println("------------");
+				controller.getProyectos();
+				IO.println("------------");
+				IO.print("Introduce el id del proyecto deseado: ");
+				idProyecto = new ObjectId(IO.readString());
+				condicion = true;
+				break;
+			case "N":
+				idProyecto = null;
+				condicion = true;
+				break;
+			default:
+				IO.println("Esa respuesta no es válida.");
+				break;
+			}
 		}
 		return controller.updateTarea(new Tarea(id, nombre, descripcion, estado, fechaFin, idProyecto));
 	}
-	
+
 	private static Boolean updateTareaByState(Controller controller) {
 		IO.print("Introduce el ID de la tarea a modificar: ");
-		ObjectId id = new ObjectId(IO.readString());		
+		ObjectId id = new ObjectId(IO.readString());
 		if (!controller.searchTarea(id).isEmpty()) {
 			IO.print("Introduce el nuevo estado de la tarea: ");
 			String estado = IO.readString();

@@ -17,6 +17,7 @@ import repositories.tareas.TareasRepository;
  */
 public class Controller {
 	private final Logger logger = Logger.getLogger(Controller.class.getName());
+	
 	// DEPENDENCIAS
 	private final EmpleadosRepository empleadosRepository;
 	private final ProyectoRepository proyectoRepository;
@@ -238,6 +239,6 @@ public class Controller {
 	 */
 	public Boolean updateTareaByState(Tarea t) {
 		logger.info("Actualizando el estado de la tarea...");
-		return tareasRepository.updateTareaByState(t);
+		return tareasRepository.updateByState(t);
 	}
 }

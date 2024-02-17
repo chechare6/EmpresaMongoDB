@@ -13,18 +13,18 @@ public class MenuProyecto {
 		System.out.println("MENU PROYECTO");
 		while (true) {
 			IO.println("╔══════════════════════════════════╗");
-	        IO.println("║          MENÚ PROYECTOS          ║");
-	        IO.println("╠══════════════════════════════════╣");
-	        IO.println("║ 1. VER                           ║");
-	        IO.println("║ 2. BUSCAR                        ║");
-	        IO.println("║ 3. AÑADIR                        ║");
-	        IO.println("║ 4. ELIMINAR                      ║");
-	        IO.println("║ 5. MODIFICAR                     ║");
-	        IO.println("║ 6. AÑADIR EMPLEADO A PROYECTO    ║");
-	        IO.println("║ 7. ELIMINAR EMPLEADO DE PROYECTO ║");
-	        IO.println("║ 0. VOLVER                        ║");
-	        IO.println("╚══════════════════════════════════╝");
-	        IO.print("OPCIÓN: ");
+			IO.println("║          MENÚ PROYECTOS          ║");
+			IO.println("╠══════════════════════════════════╣");
+			IO.println("║ 1. VER PROYECTOS                 ║");
+			IO.println("║ 2. BUSCAR PROYECTO POR ID        ║");
+			IO.println("║ 3. AÑADIR PROYECTO               ║");
+			IO.println("║ 4. ELIMINAR PROYECTO             ║");
+			IO.println("║ 5. MODIFICAR PROYECTO            ║");
+			IO.println("║ 6. AÑADIR EMPLEADO A PROYECTO    ║");
+			IO.println("║ 7. ELIMINAR EMPLEADO DE PROYECTO ║");
+			IO.println("║ 0. VOLVER                        ║");
+			IO.println("╚══════════════════════════════════╝");
+			IO.print("OPCIÓN: ");
 			switch (IO.readString().charAt(0)) {
 			case '1':
 				verProyectos(controller);
@@ -71,21 +71,27 @@ public class MenuProyecto {
 		Date fechaInicio = Date.valueOf(IO.readLocalDate());
 		IO.print("Fecha de fin: (yyyy-MM-dd)");
 		Date fechaFin = Date.valueOf(IO.readLocalDate());
-		IO.print("¿Asignar un empleado? (S/N): ");
+		Boolean condicion = false;
 		ObjectId idEmpleado = null;
-		switch (IO.readString().toUpperCase()) {
-		case "S":
-			IO.println("------------");
-			controller.getEmpleados();
-			IO.println("------------");
-			IO.print("Introduce el id del empleado deseado: ");
-			idEmpleado = new ObjectId(IO.readString());
-			break;
-		case "N":
-			idEmpleado = null;
-			break;
-		default:
-			IO.println("Esa respuesta no es válida.");
+		while (!condicion) {
+			IO.print("¿Asignar un empleado? (S/N): ");
+			switch (IO.readString().toUpperCase()) {
+			case "S":
+				IO.println("------------");
+				controller.getEmpleados();
+				IO.println("------------");
+				IO.print("Introduce el id del empleado deseado: ");
+				idEmpleado = new ObjectId(IO.readString());
+				condicion = true;
+				break;
+			case "N":
+				idEmpleado = null;
+				condicion = true;
+				break;
+			default:
+				IO.println("Esa respuesta no es válida.");
+				break;
+			}
 		}
 		return controller.addProyecto(new Proyecto(nombre, descripcion, fechaInicio, fechaFin, idEmpleado));
 	}
@@ -99,7 +105,7 @@ public class MenuProyecto {
 	private static Boolean updateProyecto(Controller controller) {
 		IO.print("Introduce el ID del proyecto a modificar: ");
 		ObjectId id = new ObjectId(IO.readString());
-		if(!controller.searchProyecto(id).isEmpty()) {
+		if (!controller.searchProyecto(id).isEmpty()) {
 			IO.print("Intoduce el nuevo nombre del proyecto: ");
 			String nombre = IO.readString();
 			IO.print("Intoduce la nueva descripcion del proyecto: ");
@@ -108,23 +114,29 @@ public class MenuProyecto {
 			Date fecha_inicio = Date.valueOf(IO.readLocalDate());
 			IO.print("Introduce la nueva fecha de fin: (yyyy-MM-dd) ");
 			Date fecha_fin = Date.valueOf(IO.readLocalDate());
-			IO.print("¿Modificar empleado asignado al proyecto? (S/N): ");
 			ObjectId idEmpleado = null;
-			switch(IO.readString().toUpperCase()) {
-			case "S":
-				IO.println("------------");
-				controller.getEmpleados();
-				IO.println("------------");
-				IO.print("Introduce el id del empleado deseado: ");
-				idEmpleado = new ObjectId(IO.readString());
-				break;
-			case "N":
-				idEmpleado = null;
-				break;
-			default:
-				IO.print("Esa respuesta no es válida.");
+			Boolean condicion = false;
+			while (!condicion) {
+				IO.print("¿Modificar empleado asignado al proyecto? (S/N): ");
+				switch (IO.readString().toUpperCase()) {
+				case "S":
+					IO.println("------------");
+					controller.getEmpleados();
+					IO.println("------------");
+					IO.print("Introduce el id del empleado deseado: ");
+					idEmpleado = new ObjectId(IO.readString());
+					condicion = true;
+					break;
+				case "N":
+					idEmpleado = null;
+					condicion = true;
+					break;
+				default:
+					IO.println("Esa respuesta no es válida.");
+				}
 			}
-			return controller.updateProyecto(new Proyecto(id, nombre, descripcion, fecha_inicio, fecha_fin, idEmpleado));
+			return controller
+					.updateProyecto(new Proyecto(id, nombre, descripcion, fecha_inicio, fecha_fin, idEmpleado));
 		} else {
 			IO.println("No existe un proyecto con esa ID.");
 			return false;

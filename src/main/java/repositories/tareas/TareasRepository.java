@@ -21,5 +21,5 @@ public interface TareasRepository extends CrudRepository<Tarea>{
 	 * @param t Tarea con el nuevo estado.
 	 * @return true si la operación se realiza con éxito, false en caso contrario.
 	 */
-	public boolean updateTareaByState(Tarea t);
+	public boolean updateByState(Tarea t);
 }
